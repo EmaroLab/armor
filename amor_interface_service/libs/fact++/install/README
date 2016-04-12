@@ -1,0 +1,16 @@
+HOW TO INSTALL FOR JAVA USAGE
+
+1) get the location of jni.h by tiping in the terminal: "locate jni.h".  Let assume the result is ***
+
+2) goto:  /FaCT++-1.6.2/src/FaCT++.JNI/Makefile
+
+3) in this file modify the line : INCLUDES = -I/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Headers -I/System/Library/Frameworks/JavaVM.framework/Headers
+into
+INCLUDES = -I/Developer/SDKs/MacOSX10.6.sdk/System/Library/Frameworks/JavaVM.framework/Headers -I/System/Library/Frameworks/JavaVM.framework/Headers -I***
+
+4) type in the terminal: "make"
+
+5) when it finishes find the generated file: "libFaCTPlusPlusJNI.so"
+
+6) place that file in the java.library.path. Where you can find the actual path by using system variables (On Windows, it maps to PATH. On Linux, it maps to LD_LIBRARY_PATH.  On OS X, it maps to DYLD_LIBRARY_PATH). In my ubuntu was "/usr/lib"
+
