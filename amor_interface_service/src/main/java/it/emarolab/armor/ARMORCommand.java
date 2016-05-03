@@ -166,8 +166,8 @@ public class ARMORCommand {
 
             case LOAD_FILE_:
                 // Load an OWLReference from and ontology file
-                // args[ String filePath, String iriPath, String bufferedManipulation,
-                //       String reasoner, Boolean bufferedFlag ]
+                // args[ String filePath, String iriPath, Boolean bufferedManipulation,
+                //       String reasoner, Boolean bufferedReasoner ]
                 ontoRef = ARMORResourceManager.loadOntologyFromFile(referenceName, args);
                 ontoRef.setOWLManipulatorBuffering(Boolean.valueOf(args.get(2)));
                 // TODO: catch error
@@ -177,7 +177,7 @@ public class ARMORCommand {
             case LOAD_FILE_MOUNTED:
                 // Load an OWLReference from and ontology file and mount the client on it
                 // args[ String filePath, String iriPath, String bufferedManipulation,
-                //       String reasoner, Boolean bufferedFlag ]
+                //       String reasoner, Boolean bufferedReasoner ]
                 ontoRef = ARMORResourceManager.loadOntologyFromFile(referenceName, args);
                 ontoRef.setOWLManipulatorBuffering(Boolean.valueOf(args.get(2)));
                 // TODO: catch error

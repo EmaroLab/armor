@@ -16,7 +16,7 @@ public class ARMORMainService extends AbstractNodeMain {
 
     public final static String DEFAULT_LOG_SAVING_PATH = ""; // TODO
     public final static Boolean DEFAULT_FULL_ENTITY_IDENTIFIER = false;
-    public final static Boolean DEFAULT_SHOW_GUI = true;
+    public final static Boolean DEFAULT_SHOW_GUI = false;
     public final static Boolean DEFAULT_LOG_REFERENCES_CONTAINER = false;
     public final static Boolean DEFAULT_LOG_REFERENCES_INTERFACE = false;
     public final static Boolean DEFAULT_LOG_OWL_LIBRARY = false;
@@ -39,26 +39,26 @@ public class ARMORMainService extends AbstractNodeMain {
 
         ParameterTree params = connectedNode.getParameterTree();
 
-        final String LOG_SAVING_PATH = params.getString("/LOG_SAVING_PATH", DEFAULT_LOG_SAVING_PATH);
-        final Boolean SHOW_GUI = params.getBoolean("/SHOW_GUI", DEFAULT_SHOW_GUI);
-        final Boolean LOG_OWL_LIBRARY = params.getBoolean("LOG_OWL_LIBRARY", DEFAULT_LOG_OWL_LIBRARY);
-        final Boolean LOG_OWL_ENQUIRER = params.getBoolean("/LOG_OWL_ENQUIRER", DEFAULT_LOG_OWL_ENQUIRER);
-        final Boolean LOG_OWL_MANIPULATOR = params.getBoolean("/LOG_OWL_MANIPULATOR", DEFAULT_LOG_OWL_MANIPULATOR);
+        final String LOG_SAVING_PATH = params.getString("/armor/settings/log_path", DEFAULT_LOG_SAVING_PATH);
+        final Boolean SHOW_GUI = params.getBoolean("/armor/settings/show_gui", DEFAULT_SHOW_GUI);
+        final Boolean LOG_OWL_LIBRARY = params.getBoolean("/armor/settings/log_owl_lib", DEFAULT_LOG_OWL_LIBRARY);
+        final Boolean LOG_OWL_ENQUIRER = params.getBoolean("/armor/settings/log_owl_enquirer", DEFAULT_LOG_OWL_ENQUIRER);
+        final Boolean LOG_OWL_MANIPULATOR = params.getBoolean("/armor/settings/log_owl_manipulator", DEFAULT_LOG_OWL_MANIPULATOR);
         // TODO: for inputs
         final Boolean FULL_ENTITY_IDENTIFIER =
-                params.getBoolean("/FULL_ENTITY_IDENTIFIER", DEFAULT_FULL_ENTITY_IDENTIFIER);
+                params.getBoolean("/armor/settings/full_entity_iri", DEFAULT_FULL_ENTITY_IDENTIFIER);
         final Boolean LOG_REFERENCES_CONTAINER =
-                params.getBoolean("/LOG_REFERENCES_CONTAINER", DEFAULT_LOG_REFERENCES_CONTAINER);
+                params.getBoolean("/armor/settings/log_reference_container", DEFAULT_LOG_REFERENCES_CONTAINER);
         final Boolean LOG_REFERENCES_INTERFACE =
-                params.getBoolean("/LOG_REFERENCES_INTERFACE", DEFAULT_LOG_REFERENCES_INTERFACE);
+                params.getBoolean("/armor/settings/log_reference_interface", DEFAULT_LOG_REFERENCES_INTERFACE);
         final Boolean LOG_REASONER_MONITOR =
-                params.getBoolean("LOG_REASONER_MONITOR", DEFAULT_LOG_REASONER_MONITOR);
+                params.getBoolean("/armor/settings/log_reasoner_monitor", DEFAULT_LOG_REASONER_MONITOR);
         final Boolean LOG_REASONER_EXPLANATION =
-                params.getBoolean("/LOG_REASONER_EXPLANATION", DEFAULT_LOG_REASONER_EXPLANATION);
+                params.getBoolean("/armor/settings/log_reasoner_explanation", DEFAULT_LOG_REASONER_EXPLANATION);
         final Boolean LOG_ONTOLOGY_REFERENCE =
-                params.getBoolean("/LOG_ONTOLOGY_REFERENCE", DEFAULT_LOG_ONTOLOGY_REFERENCE);
+                params.getBoolean("/armor/settings/log_ontology_reference", DEFAULT_LOG_ONTOLOGY_REFERENCE);
         final Boolean LOG_ONTOLOGY_EXPORTER =
-                params.getBoolean("/LOG_ONTOLOGY_EXPORTER", DEFAULT_LOG_ONTOLOGY_EXPORTER);
+                params.getBoolean("/armor/settings/log_ontology_exporter", DEFAULT_LOG_ONTOLOGY_EXPORTER);
 
         if (SHOW_GUI){
             System.out.println("Staring GUI.");
