@@ -224,12 +224,6 @@ public class ARMORCommand {
                 setResponse(true, 0, "");
                 return response;
 
-            case REASON__:
-                // Run the reasoner
-                ontoRef.synchroniseReasoner();
-                setResponse(true, 0, "");
-                return response;
-
             /////////////////       QUERY COMMANDS       /////////////////
 
             case QUERY_IND_CLASS:
@@ -332,6 +326,12 @@ public class ARMORCommand {
 
             case APPLY__:
                 ontoRef.applyOWLManipulatorChanges();
+                setResponse(true, 0, "");
+                return response;
+
+            case REASON__:
+                // Run the reasoner
+                ontoRef.synchroniseReasoner();
                 setResponse(true, 0, "");
                 return response;
 
@@ -620,7 +620,7 @@ public class ARMORCommand {
                 return Long.valueOf(value);
             case "DOUBLE":
                 return Double.valueOf(value);
-            // TODO: add default case OWLliteral
+            // TODO: add default case OWLLiteral
         }
         return null;
     }
