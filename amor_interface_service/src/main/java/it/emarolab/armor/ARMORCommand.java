@@ -10,6 +10,7 @@ import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLClass;
+import it.emarolab.amor.owlDebugger.Logger;
 
 import java.util.*;
 
@@ -224,7 +225,44 @@ public class ARMORCommand {
                 setResponse(true, 0, "");
                 return response;
 
+            case LOG_FILE_ON:
+                // Start logging to file or change the logging file
+                // args [ String logFilePath ]
+                Logger.setPrintOnFile(args.get(0));
+                setResponse(true, 0, "");
+                return response;
+
+            case LOG_FILE_OFF:
+                // Stop logging to file
+                Logger.setPrintOnFile(Logger.NOFILEPRINTING_KeyWord);
+                setResponse(true, 0, "");
+                return response;
+
+            case LOG_SCREEN_ON:
+                // Start logging to screen
+                Logger.setPrintOnConsole(true);
+                setResponse(true, 0, "");
+                return response;
+
+            case LOG_SCREEN_OFF:
+                // Stop logging on screen
+                Logger.setPrintOnConsole(false);
+                setResponse(true, 0, "");
+                return response;
+
             /////////////////       QUERY COMMANDS       /////////////////
+
+            case QUERY_IND_:
+                //Check an individual exists
+                //args[ String ind_name ]
+                Set<OWLClass> candidates = ontoRef.getIndividualClasses(args.get(0));
+                List<String> candidatesList = getStringListFromQuery(candidates, ontoRef);
+                if (candidates.size() > 0) {
+                    setResponse(true, 0, "", candidatesList);
+                }else{
+                    setResponse(false, 0, "", candidatesList);
+                }
+                return response;
 
             case QUERY_IND_CLASS:
                 // Queries all individuals belonging to a class.
@@ -304,6 +342,68 @@ public class ARMORCommand {
                 List<String> allObjectlist = getStringListFromQuery(propObjects, ontoRef);
                 setResponse(true, 0, "", allObjectlist);
                 return response;
+            case APPLY__:
+                break;
+            case REASON__:
+                break;
+            case ADD_IND_:
+                break;
+            case ADD_CLASS_:
+                break;
+            case ADD_DATAPROP_:
+                break;
+            case ADD_OBJECTPROP_:
+                break;
+            case ADD_IND_CLASS:
+                break;
+            case ADD_CLASS_CLASS:
+                break;
+            case ADD_DATAPROP_IND:
+                break;
+            case ADD_OBJECTPROP_IND:
+                break;
+            case ADD_DATAPROP_DATAPROP:
+                break;
+            case ADD_OBJECTPROP_OBJECTPROP:
+                break;
+            case ADD_DISJOINT_IND:
+                break;
+            case ADD_DISJOINT_CLASS:
+                break;
+            case REMOVE_IND_:
+                break;
+            case REMOVE_CLASS_:
+                break;
+            case REMOVE_DATAPROP_:
+                break;
+            case REMOVE_OBJECTPROP_:
+                break;
+            case REMOVE_IND_CLASS:
+                break;
+            case REMOVE_CLASS_CLASS:
+                break;
+            case REMOVE_DATAPROP_IND:
+                break;
+            case REMOVE_OBJECTPROP_IND:
+                break;
+            case REMOVE_DATAPROP_DATAPROP:
+                break;
+            case REMOVE_OBJECTPROP_OBJECTPROP:
+                break;
+            case REPLACE_DATAPROP_IND:
+                break;
+            case REPLACE_OBJECTPROP_IND:
+                break;
+            case RENAME_IND_:
+                break;
+            case RENAME_CLASS_:
+                break;
+            case RENAME_DATAPROP_:
+                break;
+            case RENAME_OBJECT_PROP:
+                break;
+            case SWRL__:
+                break;
         }
 
         if (!ARMORResourceManager.isAvailable(clientName, referenceName)){
@@ -642,13 +742,17 @@ public class ARMORCommand {
         LOAD_WEB_,
         LOAD_WEB_MOUNTED,
         DROP__,
-        REASON__,
+        LOG_FILE_ON,
+        LOG_FILE_OFF,
+        LOG_SCREEN_ON,
+        LOG_SCREEN_OFF,
 
         /////////////////       QUERY COMMANDS       /////////////////
 
         //  Only "simple" queries allowed.
         //  Compound queries should be processed from the client side.
 
+        QUERY_IND_,
         QUERY_IND_CLASS,
         QUERY_DATAPROP_IND,
         QUERY_DATAPROP_CLASS,
@@ -664,6 +768,7 @@ public class ARMORCommand {
         /////////////////    MANIPULATION COMMANDS    /////////////////
 
         APPLY__,
+        REASON__,
 
         ADD_IND_,
         ADD_CLASS_,
