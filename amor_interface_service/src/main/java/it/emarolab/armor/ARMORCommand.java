@@ -614,9 +614,11 @@ public class ARMORCommand {
         response.setErrorDescription(errorMessage);
         response.setQueriedObjects(new ArrayList<String>());
 
-        OWLReferences ontoRef = (OWLReferences)OWLReferencesContainer.getOWLReferences(referenceName);
-        if (ontoRef.getReasoner() != null){
-            response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+        if (!referenceName.equals("")) {
+            OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
+            if (ontoRef.getReasoner() != null) {
+                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            }
         }
     }
 
@@ -626,9 +628,11 @@ public class ARMORCommand {
         response.setErrorDescription(errorMessage);
         response.setQueriedObjects(queriedObjects);
 
-        OWLReferences ontoRef = (OWLReferences)OWLReferencesContainer.getOWLReferences(referenceName);
-        if (ontoRef.getReasoner() != null){
-            response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+        if (!referenceName.equals("")) {
+            OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
+            if (ontoRef.getReasoner() != null) {
+                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            }
         }
     }
     
