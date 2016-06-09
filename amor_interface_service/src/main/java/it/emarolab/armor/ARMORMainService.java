@@ -3,7 +3,6 @@ package it.emarolab.armor;
 import it.emarolab.amor.owlDebugger.OFGUI.GuiRunner;
 import armor_msgs.*;
 import com.google.common.collect.Lists;
-import org.apache.commons.logging.Log;
 import org.ros.internal.loader.CommandLineLoader;
 import org.ros.namespace.GraphName;
 import org.ros.node.*;
@@ -35,8 +34,6 @@ public class ARMORMainService extends AbstractNodeMain {
     @Override
     public void onStart(final ConnectedNode connectedNode) {
 
-        final Log log = connectedNode.getLog();
-
         ParameterTree params = connectedNode.getParameterTree();
 
         final String LOG_SAVING_PATH = params.getString("/armor/settings/log_path", DEFAULT_LOG_SAVING_PATH);
@@ -61,10 +58,12 @@ public class ARMORMainService extends AbstractNodeMain {
                 params.getBoolean("/armor/settings/log_ontology_exporter", DEFAULT_LOG_ONTOLOGY_EXPORTER);
 
         if (SHOW_GUI){
-            System.out.println("Staring GUI.");
+            connectedNode.getLog().info("Staring GUI.");
             new Thread(new GuiRunner()).start();
-            System.out.println("GUI started.");
+            connectedNode.getLog().info("GUI started.");
         }
+
+        ARMORResourceManager.setLogging(connectedNode);
 
         ServiceServer<ArmorDirectiveRequest, ArmorDirectiveResponse> plan_to_moveit =
                 connectedNode.newServiceServer("armor_interface_srv", ArmorDirective._TYPE,
@@ -75,7 +74,8 @@ public class ARMORMainService extends AbstractNodeMain {
                             public void
                             build(ArmorDirectiveRequest request, ArmorDirectiveResponse response) {
 
-                                ARMORCommand command = new ARMORCommand(request, response, FULL_ENTITY_IDENTIFIER);
+                                ARMORCommand command = new ARMORCommand(request, response,
+                                        FULL_ENTITY_IDENTIFIER, connectedNode);
                                 if (!command.getServiceResponse().getSuccess()) {
                                     response = command.executeCommand();
                                 }else{

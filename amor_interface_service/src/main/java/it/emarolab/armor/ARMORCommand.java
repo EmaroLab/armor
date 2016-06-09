@@ -5,6 +5,7 @@ import it.emarolab.amor.owlInterface.OWLReferences;
 import armor_msgs.ArmorDirectiveRequest;
 import armor_msgs.ArmorDirectiveResponse;
 import it.emarolab.amor.owlInterface.OWLReferencesInterface.OWLReferencesContainer;
+import org.ros.node.ConnectedNode;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
 import org.semanticweb.owlapi.model.OWLDataProperty;
@@ -47,8 +48,10 @@ public class ARMORCommand {
     private List<String> args;
     private ArmorDirectiveResponse response;
     private Boolean fullIRIName;
+    private ConnectedNode connectedNode;
 
-    public ARMORCommand(ArmorDirectiveRequest request, ArmorDirectiveResponse response, final Boolean fullIRIName){
+    public ARMORCommand(ArmorDirectiveRequest request, ArmorDirectiveResponse response,
+                        final Boolean fullIRIName, final ConnectedNode connectedNode){
 
         String PrimaryCommandSpec = "";
         String SecondaryCommandSpec = "";
@@ -82,6 +85,7 @@ public class ARMORCommand {
         this.args = request.getArgs();
         this.response = response;
         this.fullIRIName = fullIRIName;
+        this.connectedNode = connectedNode;
 
     }
 
@@ -131,7 +135,7 @@ public class ARMORCommand {
                     errorMessage = clientName + " cannot be mounted on " + referenceName
                             + ". Another client is already mounted on it.";
                     setResponse(false, 203, errorMessage);
-                    System.out.println(errorMessage);
+                    connectedNode.getLog().error(errorMessage);
                 }
                 return response;
 
@@ -188,7 +192,7 @@ public class ARMORCommand {
                     errorMessage = "Reference loaded from file but " + clientName + " cannot be mounted on reference "
                             + referenceName + ". Another client is already mounted on it.";
                     setResponse(false, 203, errorMessage);
-                    System.out.println(errorMessage);
+                    connectedNode.getLog().error(errorMessage);
                 }
                 return response;
 
@@ -215,7 +219,7 @@ public class ARMORCommand {
                     errorMessage = "Reference loaded from web but " +  clientName + " cannot mounted on reference "
                             + referenceName + ". Another client is already mounted on it.";
                     setResponse(false, 203, errorMessage);
-                    System.out.println(errorMessage);
+                    connectedNode.getLog().error(errorMessage);
                 }
                 return response;
 
@@ -349,6 +353,7 @@ public class ARMORCommand {
             errorMessage = clientName + " cannot connect to " + referenceName
                     + ". Another client is already mounted on it.";
             setResponse(false, 102, errorMessage);
+            connectedNode.getLog().error(errorMessage);
             return response;
         }
 
@@ -424,7 +429,7 @@ public class ARMORCommand {
                     // TODO: log
                     errorMessage = "Value type "+ args.get(2) + " not supported. "
                             + args.get(0) + "not added to " + args.get(1) + ".";
-                    System.out.println(errorMessage);
+                    connectedNode.getLog().error(errorMessage);
                     setResponse(true, 101, errorMessage);
                 }
                 return response;
@@ -508,7 +513,7 @@ public class ARMORCommand {
                     // TODO: log
                     errorMessage = "Value type "+ args.get(2) + " not supported. "
                             + args.get(0) + "not removed from " + args.get(1) + ".";
-                    System.out.println(errorMessage);
+                    connectedNode.getLog().error(errorMessage);
                     setResponse(true, 101, errorMessage);
                 }
                 return response;
@@ -546,7 +551,7 @@ public class ARMORCommand {
                     // TODO: log
                     errorMessage = "Value type "+ args.get(2) + " not supported. "
                             + args.get(0) + "not replaced from " + args.get(1) + ".";
-                    System.out.println(errorMessage);
+                    connectedNode.getLog().error(errorMessage);
                     setResponse(false, 101, errorMessage);
                 }
                 return response;

@@ -6,6 +6,7 @@ import it.emarolab.amor.owlDebugger.OFGUI.ClassExchange;
 import it.emarolab.amor.owlInterface.OWLReferences;
 import it.emarolab.amor.owlInterface.OWLReferencesInterface;
 import it.emarolab.amor.owlInterface.OWLReferencesInterface.OWLReferencesContainer;
+import org.ros.node.ConnectedNode;
 
 /**
  * Project: a ROS Multi Ontology Reference - aRMOR <br>
@@ -32,7 +33,8 @@ import it.emarolab.amor.owlInterface.OWLReferencesInterface.OWLReferencesContain
 
 public class ARMORResourceManager {
 
-    private static HashMap<String, String> MountedOntologiesTable = new HashMap<>();
+    private static HashMap<String, String> mountedOntologiesTable = new HashMap<>();
+    private static ConnectedNode workingNode = null;
 
     private ARMORResourceManager(){
         throw new AssertionError();
@@ -43,7 +45,7 @@ public class ARMORResourceManager {
         if (getOntologiesNames().contains(referenceName)){
             // TODO: logging
             ontoRef = (OWLReferences)OWLReferencesContainer.getOWLReferences(referenceName);
-            System.out.println("The ontology you are trying to add is already in the database.");
+            logWarn("The ontology you are trying to add is already in the database.");
         }else{
             // args[ String filePath, String iriPath, Boolean bufferedManipulation,
             //       String reasoner, Boolean bufferedFlag ]
@@ -77,7 +79,7 @@ public class ARMORResourceManager {
 
             if (ClassExchange.getOntoNameObj() != null){
                 ClassExchange.getOntoNameObj().setText(referenceName);}
-            MountedOntologiesTable.put(referenceName, "none");
+            mountedOntologiesTable.put(referenceName, "none");
         }
         return ontoRef;
     }
@@ -87,7 +89,7 @@ public class ARMORResourceManager {
         if (getOntologiesNames().contains(referenceName)){
             // TODO: logging
             ontoRef = (OWLReferences)OWLReferencesContainer.getOWLReferences(referenceName);
-            System.out.println("The ontology you are trying to add is already in the database.");
+            logWarn("The ontology you are trying to add is already in the database.");
         }else{
             // args[ String filePath, String iriPath, Boolean bufferedManipulation,
             //       String reasoner, Boolean bufferedFlag ]
@@ -119,7 +121,7 @@ public class ARMORResourceManager {
             }
             if (ClassExchange.getOntoNameObj() != null){
                 ClassExchange.getOntoNameObj().setText(referenceName);}
-            MountedOntologiesTable.put(referenceName, "none");
+            mountedOntologiesTable.put(referenceName, "none");
         }
         return ontoRef;
     }
@@ -131,7 +133,7 @@ public class ARMORResourceManager {
         }catch(Throwable e){
             // TODO: log
         }
-        MountedOntologiesTable.remove(referenceName);
+        mountedOntologiesTable.remove(referenceName);
     }
 
     public static Boolean tryMountClient(String clientName, String referenceName) {
@@ -141,53 +143,53 @@ public class ARMORResourceManager {
         if (getOntologiesNames().contains(referenceName)) {
             Set<String> activeOntologies = getInactiveOntologiesNames();
             if (activeOntologies.contains(referenceName)) {
-                MountedOntologiesTable.put(referenceName, clientName);
+                mountedOntologiesTable.put(referenceName, clientName);
                 return true;
             } else {
-                if (MountedOntologiesTable.get(referenceName).equals(clientName)) {
+                if (mountedOntologiesTable.get(referenceName).equals(clientName)) {
                     // TODO: logging
-                    System.out.println(clientName + " is already mounted on " + referenceName + ".");
+                    logWarn(clientName + " is already mounted on " + referenceName + ".");
                     return true;
                 } else {
                     // TODO: logging
-                    String currentClient = MountedOntologiesTable.get(referenceName);
-                    System.out.println(currentClient + "is currently mounted on " + referenceName + ". Please unmount "
+                    String currentClient = mountedOntologiesTable.get(referenceName);
+                    logWarn(currentClient + "is currently mounted on " + referenceName + ". Please unmount "
                             + currentClient + "before trying to mount another client.");
                     return false;
                 }
             }
         } else {
             // TODO: logging
-            System.out.println("No OWLReference initialized with this name:" + referenceName);
+            logInfo("No OWLReference initialized with this name:" + referenceName);
             return false;
         }
     }
 
     public static void unmountClientFromAll(String clientName){
-        Set<String> ontologies = MountedOntologiesTable.keySet();
+        Set<String> ontologies = mountedOntologiesTable.keySet();
         Integer interruptedConnections = 0;
         for (String ontology : ontologies){
-            if (MountedOntologiesTable.get(ontology).equals(clientName)){
-                MountedOntologiesTable.put(ontology, "none");
+            if (mountedOntologiesTable.get(ontology).equals(clientName)){
+                mountedOntologiesTable.put(ontology, "none");
             }
             interruptedConnections += 1;
         }
         // TODO: logging
-        System.out.println(clientName + " disconnected from " + interruptedConnections.toString() + " ontologies.");
+        logInfo(clientName + " disconnected from " + interruptedConnections.toString() + " ontologies.");
     }
 
     public static void unmountClientFromOntology(String clientName, String referenceName){
-        if (MountedOntologiesTable.get(referenceName).equals(clientName)){
-            MountedOntologiesTable.put(referenceName,"none");
+        if (mountedOntologiesTable.get(referenceName).equals(clientName)){
+            mountedOntologiesTable.put(referenceName,"none");
         }else{
             // TODO: logging
-            System.out.println("No client " + clientName + " mounted on " + referenceName + ".");
+            logWarn("No client " + clientName + " mounted on " + referenceName + ".");
         }
     }
 
     public static Set<String> getOntologiesNames(){
         Set<String> ontologies = new HashSet<>();
-        for (String ontology : MountedOntologiesTable.keySet()){
+        for (String ontology : mountedOntologiesTable.keySet()){
             ontologies.add(ontology);
         }
         return ontologies;
@@ -195,8 +197,8 @@ public class ARMORResourceManager {
 
     public static Set<String> getActiveOntologiesNames(){
         Set<String> ontologies = new HashSet<>();
-        for (String ontology : MountedOntologiesTable.keySet()){
-            String client = MountedOntologiesTable.get(ontology);
+        for (String ontology : mountedOntologiesTable.keySet()){
+            String client = mountedOntologiesTable.get(ontology);
             if (!client.equals("none")) {
                 ontologies.add(ontology);
             }
@@ -206,8 +208,8 @@ public class ARMORResourceManager {
 
     public static Set<String> getInactiveOntologiesNames(){
         Set<String> ontologies = new HashSet<>();
-        for (String ontology : MountedOntologiesTable.keySet()){
-            String client = MountedOntologiesTable.get(ontology);
+        for (String ontology : mountedOntologiesTable.keySet()){
+            String client = mountedOntologiesTable.get(ontology);
             if (client.equals("none")) {
                 ontologies.add(ontology);
             }
@@ -217,7 +219,7 @@ public class ARMORResourceManager {
 
     public static Set<String> getRegisteredClientsNames(){
         Set<String> clients = new HashSet<>();
-        for (String client : MountedOntologiesTable.values()){
+        for (String client : mountedOntologiesTable.values()){
             if (!client.equals("none")){
                 clients.add(client);
             }
@@ -226,8 +228,36 @@ public class ARMORResourceManager {
     }
 
     public static boolean isAvailable(String client, String ontology){
-        return (MountedOntologiesTable.get(ontology).equals(client) ||
-                MountedOntologiesTable.get(ontology).equals("none"));
+        return (mountedOntologiesTable.get(ontology).equals(client) ||
+                mountedOntologiesTable.get(ontology).equals("none"));
+    }
+
+    public static void setLogging(final ConnectedNode connectedNode){
+        workingNode = connectedNode;
+    }
+
+    private static void logInfo(String str){
+        if (workingNode != null){
+            workingNode.getLog().info(str);
+        }
+    }
+
+    private static void logDebug(String str){
+        if (workingNode != null){
+            workingNode.getLog().debug(str);
+        }
+    }
+
+    private static void logWarn(String str){
+        if (workingNode != null){
+            workingNode.getLog().warn(str);
+        }
+    }
+
+    private static void logError(String str){
+        if (workingNode != null){
+            workingNode.getLog().error(str);
+        }
     }
 
 }
