@@ -342,68 +342,7 @@ public class ARMORCommand {
                 List<String> allObjectlist = getStringListFromQuery(propObjects, ontoRef);
                 setResponse(true, 0, "", allObjectlist);
                 return response;
-            case APPLY__:
-                break;
-            case REASON__:
-                break;
-            case ADD_IND_:
-                break;
-            case ADD_CLASS_:
-                break;
-            case ADD_DATAPROP_:
-                break;
-            case ADD_OBJECTPROP_:
-                break;
-            case ADD_IND_CLASS:
-                break;
-            case ADD_CLASS_CLASS:
-                break;
-            case ADD_DATAPROP_IND:
-                break;
-            case ADD_OBJECTPROP_IND:
-                break;
-            case ADD_DATAPROP_DATAPROP:
-                break;
-            case ADD_OBJECTPROP_OBJECTPROP:
-                break;
-            case ADD_DISJOINT_IND:
-                break;
-            case ADD_DISJOINT_CLASS:
-                break;
-            case REMOVE_IND_:
-                break;
-            case REMOVE_CLASS_:
-                break;
-            case REMOVE_DATAPROP_:
-                break;
-            case REMOVE_OBJECTPROP_:
-                break;
-            case REMOVE_IND_CLASS:
-                break;
-            case REMOVE_CLASS_CLASS:
-                break;
-            case REMOVE_DATAPROP_IND:
-                break;
-            case REMOVE_OBJECTPROP_IND:
-                break;
-            case REMOVE_DATAPROP_DATAPROP:
-                break;
-            case REMOVE_OBJECTPROP_OBJECTPROP:
-                break;
-            case REPLACE_DATAPROP_IND:
-                break;
-            case REPLACE_OBJECTPROP_IND:
-                break;
-            case RENAME_IND_:
-                break;
-            case RENAME_CLASS_:
-                break;
-            case RENAME_DATAPROP_:
-                break;
-            case RENAME_OBJECT_PROP:
-                break;
-            case SWRL__:
-                break;
+
         }
 
         if (!ARMORResourceManager.isAvailable(clientName, referenceName)){
