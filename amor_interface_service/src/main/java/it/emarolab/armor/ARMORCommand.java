@@ -668,6 +668,9 @@ public class ARMORCommand {
                 return Long.valueOf(value);
             case "DOUBLE":
                 return Double.valueOf(value);
+            case "BOOLEAN":
+            case "BOOL":
+                return Boolean.valueOf(value);
             // TODO: add default case OWLLiteral
         }
         return null;
