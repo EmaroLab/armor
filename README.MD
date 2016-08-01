@@ -2,12 +2,12 @@
 ###A ROS Multi-Ontology Reference
 
 **ARMOR** is a powerful and versatile management system for single and multi-ontology architectures under ROS. It allows
-  to load, query and modify multiple ontologies and requires very little knowledge of OWL APIs and Java. Despite its ease 
-  of use, ARMOR provides a large share of OWL APIs functions and capabilities in a simple server-client architecture and
-  offers increased flexibility compared to previous ontological systems running under ROS.
-  
-  ARMOR is based on **AMOR** - a Multi-Ontology Reference library ([here](https://github.com/EmaroLab/multi_ontology_reference) the link to the ROS library version used by ARMOR).
-  AMOR is a complete library of helper functions for OWL ontologies with some remarkable features.
+to load, query and modify multiple ontologies and requires very little knowledge of OWL APIs and Java. Despite its ease 
+of use, ARMOR provides a large share of OWL APIs functions and capabilities in a simple server-client architecture and
+offers increased flexibility compared to previous ontological systems running under ROS.
+
+ARMOR is based on **AMOR** - a Multi-Ontology Reference library ([here](https://github.com/EmaroLab/multi_ontology_reference) the link to the ROS library version used by ARMOR).
+AMOR is a complete library of helper functions for OWL ontologies with some remarkable features.
   
   + Support for multiple ontologies.
   + Ensures thread-safe ontology manipulations.
@@ -18,15 +18,15 @@
   + Out-of-the-box support for most reasoners. Easy to add more.
   + Based on latest standards: Java 8 and OWL API 5.
   
-  ARMOR's main goal is to ease the use of ontologies in robotics by bringing these features to developers working with ROS.
-  Not everyone in the ROS community is a Java developer, even more rarely someone used the low-level OWL API. 
-  As a consequence, we decided to hide this complexity inside of ARMOR. 
+ARMOR's main goal is to ease the use of ontologies in robotics by bringing these features to developers working with ROS.
+Not everyone in the ROS community is a Java developer, even more rarely someone used the low-level OWL API. 
+As a consequence, we decided to hide this complexity inside of ARMOR. 
   
-  ARMOR offers a service-client interface for the vast majority of AMOR functions, with some notable exceptions of rare 
-  use. As a rule of thumb, as long as you create your own ontological architecture offline and use ARMOR at runtime to 
-  populate, modify and query it, you should be good to go.
-  
-  It adds the following features on top of AMOR:
+ARMOR offers a service-client interface for the vast majority of AMOR functions, with some notable exceptions of rare 
+use. As a rule of thumb, as long as you create your own ontological architecture offline and use ARMOR at runtime to 
+populate, modify and query it, you should be good to go.
+
+It adds the following features on top of AMOR:
   
   + **_Flexible mount system_**, allows one or more ROS clients to identify themselves and mount on an ontology reference to
    prevent other processes from modifying its state. Excluded processes can still query the locked ontologies to avoid 
@@ -61,13 +61,13 @@ secondary_command_spec: ''
 args: ['']"   
 ```
   
-| Field                    | arg                                                            |
-| ------------------------ | -------------------------------------------------------------- |
-| *client_name*            | *optional* node id                                             |
-| *reference_name*         | name of the ontology to work on                                |
-| *command*                | command to execute (e.g. ADD, LOAD ...)                        |
-| *primary_command_spec*   | *optional* primary command specification (e.g. IND, FILE, ...) |
-| *secondary_command_spec* | *optional* secondary command specification                     |
-| *args*                   | *optional* list of arguments (e.g. list of individuals to add) |
+| Field                    | arg                                                             |
+| ------------------------ | --------------------------------------------------------------- |
+| *client_name*            | *optional*, node id                                             |
+| *reference_name*         | name of the ontology to work on                                 |
+| *command*                | command to execute (e.g. ADD, LOAD ...)                         |
+| *primary_command_spec*   | *optional*, primary command specification (e.g. IND, FILE, ...) |
+| *secondary_command_spec* | *optional*, secondary command specification                     |
+| *args*                   | *optional*, list of arguments (e.g. list of individuals to add) |
   
 The complete list of **commands** and **directives** can be found [here](https://github.com/EmaroLab/armor/blob/master/commands.md).
