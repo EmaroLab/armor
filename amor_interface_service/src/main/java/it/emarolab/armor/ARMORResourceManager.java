@@ -31,7 +31,7 @@ import org.ros.node.ConnectedNode;
  * @version 2.0
  */
 
-public class ARMORResourceManager {
+class ARMORResourceManager {
 
     private static HashMap<String, String> mountedOntologiesTable = new HashMap<>();
     private static ConnectedNode workingNode = null;
@@ -40,7 +40,7 @@ public class ARMORResourceManager {
         throw new AssertionError();
     }
 
-    public static OWLReferences loadOntologyFromFile(String referenceName, List<String> args){
+    static OWLReferences loadOntologyFromFile(String referenceName, List<String> args){
         OWLReferences ontoRef;
         if (getOntologiesNames().contains(referenceName)){
             // TODO: logging
@@ -84,7 +84,7 @@ public class ARMORResourceManager {
         return ontoRef;
     }
 
-    public static OWLReferences loadOntologyFromWeb(String referenceName, List<String> args){
+    static OWLReferences loadOntologyFromWeb(String referenceName, List<String> args){
         OWLReferences ontoRef;
         if (getOntologiesNames().contains(referenceName)){
             // TODO: logging
@@ -126,7 +126,7 @@ public class ARMORResourceManager {
         return ontoRef;
     }
 
-    public static void removeOntology(String referenceName){
+    static void removeOntology(String referenceName){
         try {
             OWLReferencesInterface ontology = OWLReferencesContainer.getOWLReferences(referenceName);
             ontology.finalize();
@@ -136,7 +136,7 @@ public class ARMORResourceManager {
         mountedOntologiesTable.remove(referenceName);
     }
 
-    public static Boolean tryMountClient(String clientName, String referenceName) {
+    static Boolean tryMountClient(String clientName, String referenceName) {
         // Tries to mount a client on an ontology.
         // It fails if the ontology already exists or another client is already mounted on it.
         // It succeeds but warns the user, if the client is already mount on the ontology.
@@ -178,7 +178,7 @@ public class ARMORResourceManager {
         logInfo(clientName + " disconnected from " + interruptedConnections.toString() + " ontologies.");
     }
 
-    public static void unmountClientFromOntology(String clientName, String referenceName){
+    static void unmountClientFromOntology(String clientName, String referenceName){
         if (mountedOntologiesTable.get(referenceName).equals(clientName)){
             mountedOntologiesTable.put(referenceName,"none");
         }else{
@@ -187,7 +187,7 @@ public class ARMORResourceManager {
         }
     }
 
-    public static Set<String> getOntologiesNames(){
+    static Set<String> getOntologiesNames(){
         Set<String> ontologies = new HashSet<>();
         for (String ontology : mountedOntologiesTable.keySet()){
             ontologies.add(ontology);
@@ -206,7 +206,7 @@ public class ARMORResourceManager {
         return ontologies;
     }
 
-    public static Set<String> getInactiveOntologiesNames(){
+    static Set<String> getInactiveOntologiesNames(){
         Set<String> ontologies = new HashSet<>();
         for (String ontology : mountedOntologiesTable.keySet()){
             String client = mountedOntologiesTable.get(ontology);
@@ -227,12 +227,12 @@ public class ARMORResourceManager {
         return clients;
     }
 
-    public static boolean isAvailable(String client, String ontology){
+    static boolean isAvailable(String client, String ontology){
         return (mountedOntologiesTable.get(ontology).equals(client) ||
                 mountedOntologiesTable.get(ontology).equals("none"));
     }
 
-    public static void setLogging(final ConnectedNode connectedNode){
+    static void setLogging(final ConnectedNode connectedNode){
         workingNode = connectedNode;
     }
 

@@ -13,18 +13,18 @@ import org.ros.node.service.ServiceServer;
 
 public class ARMORMainService extends AbstractNodeMain {
 
-    public final static String DEFAULT_LOG_SAVING_PATH = ""; // TODO
-    public final static Boolean DEFAULT_FULL_ENTITY_IDENTIFIER = false;
-    public final static Boolean DEFAULT_SHOW_GUI = false;
-    public final static Boolean DEFAULT_LOG_REFERENCES_CONTAINER = false;
-    public final static Boolean DEFAULT_LOG_REFERENCES_INTERFACE = false;
-    public final static Boolean DEFAULT_LOG_OWL_LIBRARY = false;
-    public final static Boolean DEFAULT_LOG_REASONER_MONITOR = false;
-    public final static Boolean DEFAULT_LOG_REASONER_EXPLANATION = false;
-    public final static Boolean DEFAULT_LOG_OWL_MANIPULATOR = false;
-    public final static Boolean DEFAULT_LOG_ONTOLOGY_REFERENCE = false;
-    public final static Boolean DEFAULT_LOG_OWL_ENQUIRER = false;
-    public final static Boolean DEFAULT_LOG_ONTOLOGY_EXPORTER = false;
+    private final static String DEFAULT_LOG_SAVING_PATH = ""; // TODO
+    private final static Boolean DEFAULT_FULL_ENTITY_IDENTIFIER = false;
+    private final static Boolean DEFAULT_SHOW_GUI = false;
+    private final static Boolean DEFAULT_LOG_REFERENCES_CONTAINER = false;
+    private final static Boolean DEFAULT_LOG_REFERENCES_INTERFACE = false;
+    private final static Boolean DEFAULT_LOG_OWL_LIBRARY = false;
+    private final static Boolean DEFAULT_LOG_REASONER_MONITOR = false;
+    private final static Boolean DEFAULT_LOG_REASONER_EXPLANATION = false;
+    private final static Boolean DEFAULT_LOG_OWL_MANIPULATOR = false;
+    private final static Boolean DEFAULT_LOG_ONTOLOGY_REFERENCE = false;
+    private final static Boolean DEFAULT_LOG_OWL_ENQUIRER = false;
+    private final static Boolean DEFAULT_LOG_ONTOLOGY_EXPORTER = false;
 
     @Override
     public GraphName getDefaultNodeName() {

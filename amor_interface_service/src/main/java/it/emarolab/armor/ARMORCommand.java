@@ -39,7 +39,7 @@ import java.util.*;
  * @version 2.0
  */
 
-public class ARMORCommand {
+class ARMORCommand {
 
     private final static String COMMAND_DELIMITER = "_"; //regex reserved chars like + must be escaped (\\+)
     private String fullCommand;
@@ -50,7 +50,7 @@ public class ARMORCommand {
     private Boolean fullIRIName;
     private ConnectedNode connectedNode;
 
-    public ARMORCommand(ArmorDirectiveRequest request, ArmorDirectiveResponse response,
+    ARMORCommand(ArmorDirectiveRequest request, ArmorDirectiveResponse response,
                         final Boolean fullIRIName, final ConnectedNode connectedNode){
 
         String PrimaryCommandSpec = "";
@@ -89,11 +89,11 @@ public class ARMORCommand {
 
     }
 
-    public ArmorDirectiveResponse getServiceResponse() {
+    ArmorDirectiveResponse getServiceResponse() {
         return response;
     }
 
-    public ArmorDirectiveResponse executeCommand(){
+    ArmorDirectiveResponse executeCommand(){
 
         OWLReferences ontoRef = (OWLReferences)OWLReferencesContainer.getOWLReferences(referenceName);
         String formattedCommand = fullCommand.toUpperCase().replaceAll(COMMAND_DELIMITER, "_");
