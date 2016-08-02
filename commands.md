@@ -13,7 +13,7 @@ only such client will be allowed to run manipulation commands on such
 reference. Calls from clients with a different ID will fail and report an
 error.
 
-| Command | 1st spec. | 2nd spec. | arg[0] | arg[1] | arg[2] | arg[3] | arg[4] |
-| :-----: | :-------: | :-------: | :----: | :----: | :----: | :----: | :----: |
-| **ADD** | **IND**   | ---       | *ind name* | - | - | - | - |
-| **ADD** | **IND**   | **CLASS** | *ind name* | *class name* | - | - | - | 
+| Effect | Command | 1st spec. | 2nd spec. | arg[0] | arg[1] | arg[2] | arg[3] | arg[4] |
+| :----: | :-----: | :-------: | :-------: | :----: | :----: | :----: | :----: | :----: |
+| Add ind to T | **ADD** | **IND**   | ---       | *ind name* | - | - | - | - |
+| Add ind to a class | **ADD** | **IND**   | **CLASS** | *ind name* | *class name* | - | - | - | 
