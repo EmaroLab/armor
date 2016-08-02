@@ -20,7 +20,7 @@ error.
 
 | Effect                          | Command     | 1s spec.       | 2nd spec.      | args[0]      | args[1]       | args[2]        | args[3]        | args[4]        |
 |---------------------------------|:-----------:|:--------------:|:--------------:|:------------:|:-------------:|:--------------:|:--------------:|:--------------:|                                                  |         |            |            |              |               |                |                |                |
-| Add ind to T                    | **ADD**     | **IND**        |                | ind name     |               |                |                |                |
+| Add ind to T                    | **ADD**     | **IND**        |                | <sub>ind name</sub>    |               |                |                |                |
 | Add ind to a class              | **ADD**     | **IND**        | **CLASS**      | ind name     | cls name      |                |                |                |
 | Add sub-cls to T                | **ADD**     | **CLASS**      |                | cls name     |               |                |                |                |
 | Add sub-cls to super-cls        | **ADD**     | **CLASS**      | **CLASS**      | sub-cls name | super-cls name|                |                |                |
