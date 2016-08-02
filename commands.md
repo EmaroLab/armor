@@ -32,7 +32,7 @@ error.
 | Makes two individuals disjoint  | ADD     | DISJOINT   | IND        | ind1 name    | ind2 name     |                |                |                |
 | Makes two classes disjoint      | ADD     | DISJOINT   | CLASS      | cls1 name    | cls2 name     |                |                |                |
 |---------------------------------|:-------:|:----------:|:----------:|:------------:|:-------------:|:--------------:|:--------------:|:--------------:|
-| Ind !€ OWLThings                                 | REMOVE  | IND        | ---        | ind Name     |               |                |                |                |
+| Ind !€ OWLThingsi                                 | REMOVE  | IND        | ---        | ind Name     |               |                |                |                |
 | Ind !€ cls                                       | REMOVE  | IND        | CLASS      | ind Name     | Cls Name      |                |                |                |
 | Cls !€ OWLThings                                 | REMOVE  | CLASS      | ---        | cls Name     |               |                |                |                |
 | Sub-Cls !€ super-cls                             | REMOVE  | CLASS      | CLASS      | Sub-cls Name | superCls Name |                |                |                |
