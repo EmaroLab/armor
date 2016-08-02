@@ -60,7 +60,9 @@ primary_command_spec: ''
 secondary_command_spec: ''
 args: ['']"   
 ```
-  
+
+###Request
+
 | Field                    | arg                                                             |
 | ------------------------ | --------------------------------------------------------------- |
 | *client_name*            | *optional*, node id                                             |
@@ -71,3 +73,28 @@ args: ['']"
 | *args*                   | *optional*, list of arguments (e.g. list of individuals to add) |
   
 The complete list of **commands** and **directives** can be found [here](https://github.com/EmaroLab/armor/blob/master/commands.md).
+
+###Response
+
+| Field                    | arg                                                             |
+| ------------------------ | --------------------------------------------------------------- |
+| *success*                | *bool*                                                          |
+| *exit_code*              | *int32*                                                         |
+| *error_description*      | *string*                                                        |
+| *is_consistent*          | *optional*, *bool*, returns reference consistency               |
+| *queried_objects*        | *optional*, *list string*, returns list of queried objects      |
+
+###Error codes
+
+| Field                    | arg                                                             |
+| ------------------------ | --------------------------------------------------------------- |
+| **0**                    | *Success*                                                       |
+| **1XX**                  | *Warning*                                                       |
+| **101**                  | *Unsupported data type*                                         |
+| **102**                  | *Reference busy*                                                |
+| **2XX**                  | *Error*                                                         |
+| **201**                  | *Malformed request, unspecified reference name*                 |
+| **202**                  | *Malformed request, unspecified command*                        |
+| **203**                  | *Cannot mount client on specified reference*                    |
+| **204**                  | *Debug only, command defined but not implemented*               |
+| **205**                  | *Non-existing command/specification*                            |
