@@ -17,10 +17,10 @@ manipulation commands. If an identified client is mounted on a reference,
 only such client will be allowed to run manipulation commands on such 
 reference. Calls from clients with a different ID will fail and report an
 error.
-
+<sub>
 | Effect                          | Command     | 1s spec.       | 2nd spec.      | args[0]      | args[1]       | args[2]        | args[3]        | args[4]        |
 |---------------------------------|:-----------:|:--------------:|:--------------:|:------------:|:-------------:|:--------------:|:--------------:|:--------------:|                                                  |         |            |            |              |               |                |                |                |
-| Add ind to T                    | **ADD**     | **IND**        |                | <sub>ind name</sub>    |               |                |                |                |
+| Add ind to T                    | **ADD**     | **IND**        |                | ind name     |               |                |                |                |
 | Add ind to a class              | **ADD**     | **IND**        | **CLASS**      | ind name     | cls name      |                |                |                |
 | Add sub-cls to T                | **ADD**     | **CLASS**      |                | cls name     |               |                |                |                |
 | Add sub-cls to super-cls        | **ADD**     | **CLASS**      | **CLASS**      | sub-cls name | super-cls name|                |                |                |
@@ -55,3 +55,4 @@ error.
 | applies buffered changes        | **APPLY**   |                |                |              |               |                |                |                |
 |                                 |             |                |                |              |               |                |                |                |
 | UNDEFINED                       | **SWRL**    |                |                |              |               |                |                |                |
+</sub>
