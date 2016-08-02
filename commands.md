@@ -18,4 +18,4 @@ error.
 | Add ind to T | **ADD** | **IND**   | --- | *ind name* | - | - | - | - |
 | Add ind to a class | **ADD** | **IND**   | **CLASS** | *ind name* | *class name* | - | - | - |
 | Add class to T | **ADD** | **CLASS** | --- | *class name* | - | - | - | - |
-| Add class2 to class1 | **ADD** | **CLASS** | **CLASS** | *class1 name* | *class2 name* | - | - | - |  
+| Add subclass to superclass | **ADD** | **CLASS** | **CLASS** | *subclass name* | *superclass name* | - | - | - |  
