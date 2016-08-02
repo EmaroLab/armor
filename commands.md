@@ -18,4 +18,6 @@ error.
 | Add ind to T | **ADD** | **IND**   | --- | *ind name* | - | - | - | - |
 | Add ind to a class | **ADD** | **IND**   | **CLASS** | *ind name* | *class name* | - | - | - |
 | Add class to T | **ADD** | **CLASS** | --- | *class name* | - | - | - | - |
-| Add subclass to superclass | **ADD** | **CLASS** | **CLASS** | *subclass name* | *superclass name* | - | - | - |  
+| Add subclass to superclass | **ADD** | **CLASS** | **CLASS** | *subclass name* | *superclass name* | - | - | - |
+| UNDEFINED IN ARMOR | **ADD** | **DATAPROP** | - | - | - | - |
+| Add dataprop to ind | **ADD** | **DATAPROP** | **IND** | *prop name* | *ind name * | *type* | *value* | 
