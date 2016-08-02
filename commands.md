@@ -20,12 +20,12 @@ error.
 
 | <sub>Effect                          | Command     | 1s spec.       | 2nd spec.      | args[0]      | args[1]       | args[2]        | args[3]        | args[4]        |
 |---------------------------------|:-----------:|:--------------:|:--------------:|:------------:|:-------------:|:--------------:|:--------------:|:--------------:|
-| <sub>Add ind to T                   </sub> | **ADD**     | **IND**        |                | <sub>ind name    </sub> |                    |                |                |                |
-| <sub>Add ind to a class             </sub> | **ADD**     | **IND**        | **CLASS**      | <sub>ind name    </sub> | <sub>cls name     </sub> |                |                |                |
-| <sub>Add sub-cls to T               </sub> | **ADD**     | **CLASS**      |                | <sub>cls name    </sub> |                    |                |                |                |
-| <sub>Add sub-cls to super-cls       </sub> | **ADD**     | **CLASS**      | **CLASS**      | <sub>sub-cls name</sub> | <sub>super-cls name </sub>|                |                |                |
-| <sub>UNDEFINED                      </sub> | **ADD**     | **DATAPROP**   |                |                   |                    |                |                |                |
-| <sub>Add data property to ind       </sub> | **ADD**     | **DATAPROP**   | **IND**        | <sub>prop name   </sub> | <sub>ind name     </sub> | <sub>type     </sub> | <sub>value    </sub> |                |
+| <sub>Add ind to T                   </sub> | **ADD**     | **IND**        |                | <sub>ind name    </sub> |                           |                      |                |                |
+| <sub>Add ind to a class             </sub> | **ADD**     | **IND**        | **CLASS**      | <sub>ind name    </sub> | <sub>cls name      </sub> |                      |                |                |
+| <sub>Add sub-cls to T               </sub> | **ADD**     | **CLASS**      |                | <sub>cls name    </sub> |                           |                      |                |                |
+| <sub>Add sub-cls to super-cls       </sub> | **ADD**     | **CLASS**      | **CLASS**      | <sub>sub-cls name</sub> | <sub>super-cls name </sub>|                      |                |                |
+| <sub>UNDEFINED                      </sub> | **ADD**     | **DATAPROP**   |                |                   |                    |            |                      |                |
+| <sub>Add data property to ind       </sub> | **ADD**     | **DATAPROP**   | **IND**        | <sub>prop name   </sub> | <sub>ind name      </sub> | <sub>type     </sub> | <sub>value    </sub> |                |
 | <sub>UNDEFINED                      </sub> | **ADD**    </sub> | **DATAPROP**   | **DATAPROP**   |                   |                    |                |                |                |
 | <sub>UNDEFINED                      </sub> | **ADD**     | **OBJECTPROP** |                |                   |                    |                |                |                |
 | <sub>add obj property to ind        </sub> | **ADD**     | **OBJECTPROP** | **IND**        | <sub>prop name   </sub> | <sub>ind name     </sub> | <sub>ind-value name</sub> |                |                |
