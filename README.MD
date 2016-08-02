@@ -11,7 +11,7 @@ AMOR is a complete library of helper functions for OWL ontologies with some rema
   
   + Support for multiple ontologies.
   + Ensures thread-safe ontology manipulations.
-  + Implements a wide range of functions: from simple "add an individual" to more esoteric "change an SWRL rule at runtime".
+  + Implements a wide range of functions: from simple "add an individual" to more esoteric "modify an SWRL rule".
   + Excellent performances which can be further customized based on user needs.
   + Ontology debug GUI available (currently working but not stable).
   + Extensive logging.
