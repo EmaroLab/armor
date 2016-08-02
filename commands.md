@@ -32,26 +32,26 @@ error.
 | UNDEFINED                       | **ADD**     | **OBJECTPROP** | **OBJECTPROP** | -            | -             | -              | -              | -          |
 | Makes two individuals disjoint  | **ADD**     | **DISJOINT**   | **IND**        | ind1 name    | ind2 name     | -              | -              | -          |
 | Makes two classes disjoint      | **ADD**     | **DISJOINT**   | **CLASS**      | cls1 name    | cls2 name     | -              | -              | -          |
-|                                 | -           | -              | -              | -            | -             | -              | -              | -          |
+|                                 |             |                |                |              |               |                |                |            |
 | Remove ind from T               | **REMOVE**  | **IND**        | -              | ind name     | -             | -              | -              | -          |
 | Remove ind from cls             | **REMOVE**  | **IND**        | **CLASS**      | ind name     | cls Name      | -              | -              | -          |
 | Remove cls from T               | **REMOVE**  | **CLASS**      | -              | cls name     | -             | -              | -              | -          |
-| remove sub-cls from super-cls   | **REMOVE**  | **CLASS**      | **CLASS**      | sub-cls name | super-cls Name| -              | -              | -          |
+| Remove sub-cls from super-cls   | **REMOVE**  | **CLASS**      | **CLASS**      | sub-cls name | super-cls Name| -              | -              | -          |
 | UNDEFINED                       | **REMOVE**  | **DATAPROP**   | -              | -            | -             | -              | -              | -          |
 | Remove dataprop from ind        | **REMOVE**  | **DATAPROP**   | **IND**        | prop name    | ind name      | type           | value          | -          |
 | UNDEFINED                       | **REMOVE**  | **DATAPROP**   | **DATAPROP**   | -            | -             | -              | -              | -          |
 | UNDEFINED                       | **REMOVE**  | **OBJECTPROP** | -              | -            | -             | -              | -              | -          |
 | Remove objectprop from ind      | **REMOVE**  | **OBJECTPROP** | **IND**        | prop name    | ind name      | value name     | -              | -          |
 | UNDEFINED                       | **REMOVE**  | **OBJECTPROP** | **OBJECTPROP** | -            | -             | -              | -              | -          |
-|                                 | -           | -              | -              | -            | -             | -              | -              | -          |
+|                                 |             |                |                |              |               |                |                |            |
 | Replace ind dataprop            | **REPLACE** | **DATAPROP**   | **IND**        | prop name    | ind name      | type           | new-value      | old-value  |
 | Replace ind objectprop          | **REPLACE** | **OBJECTPROP** | **IND**        | prop name    | ind name      | new-value name | old-value name | -          |
-|                                 | -           | -              | -              | -            | -             | -              | -              | -          |
+|                                 |             |                |                |              |               |                |                |            |
 | Rename ind                      | **RENAME**  | **IND**        | -              | old-name     | new-name      | -              | -              | -          |
 | Rename cls                      | **RENAME**  | **CLASS**      | -              | old-Name     | new-name      | -              | -              | -          |
 | Rename dataprop                 | **RENAME**  | **DATAPROP**   | -              | old-Name     | new-name      | -              | -              | -          |
 | Rename objectprop               | **RENAME**  | **OBJECTPROP** | -              | old-Name     | new-name      | -              | -              | -          |
-|                                 | -           | -              | -              | -            | -             | -              | -              | -          |
+|                                 |             |                |                |              |               |                |                |            |
 | applies buffered changes        | **APPLY**   | -              | -              | -            | -             | -              | -              | -          |
-|                                 | -           | -              | -              | -            | -             | -              | -              | -          |
+|                                 |             |                |                |              |               |                |                |            |
 | UNDEFINED                       | **SWRL**    | -              | -              | -            | -             | -              | -              | -          |
