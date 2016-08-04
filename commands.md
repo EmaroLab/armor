@@ -52,6 +52,87 @@ error.
 | Rename dataprop                 | **RENAME**  | **DATAPROP**   | -              | old-Name     | new-name      | -              | -              | -          |
 | Rename objectprop               | **RENAME**  | **OBJECTPROP** | -              | old-Name     | new-name      | -              | -              | -          |
 |                                 |             |                |                |              |               |                |                |            |
-| applies buffered changes        | **APPLY**   | -              | -              | -            | -             | -              | -              | -          |
+| Applies buffered changes        | **APPLY**   | -              | -              | -            | -             | -              | -              | -          |
+| Run buffered reasoner           | **REASON**  | -              | -              | -            | -             | -              | -              | -          |
 |                                 |             |                |                |              |               |                |                |            |
 | UNDEFINED                       | **SWRL**    | -              | -              | -            | -             | -              | -              | -          |
+
+##Queries
+
+The `QUERY` command and its specifications are used to query knowledge from
+the ontology. Results are returned in the service response field  `queried_objects`.
+They can be run freely by any client even if another client is already 
+mounted on the reference.
+
+**NOTE:** query operations can occupy the ARMOR server for relatively long
+time. Hence, it is good practice not to run queries on ontologies while 
+they are being used in performance sensitive processes. An alternative
+and stricter version of the mount system may be implemented in future to
+enforce this practice.
+
+| `queried_objects`                                        | Command | 1st spec.  | 2nd spec.  | args[0]        | args[1]   |
+|:--------------------------------------------------------:|:-------:|:----------:|:----------:|:--------------:|:---------:|
+| Check if an individual exists [^1]                       | QUERY   | IND        | -          | ind name       |           |
+| All individuals belonging to a cls                       | QUERY   | IND        | CLASS      | cls name       | -         |
+| UNDEFINED                                                | QUERY   | DATAPROP   | CLASS      | -              | -         |
+| UNDEFINED                                                | QUERY   | OBJECTPROP | CLASS      | -              | -         |
+| All values of a data property belonging to an individual | QUERY   | DATAPROP   | IND        | prop name      | ind name  |
+| All values of a data property belonging to an individual | QUERY   | OBJECTPROP | IND        | prop name      | ind name  |
+| All classes belonging to a super-class                   | QUERY   | CLASS      | CLASS      | super-cls name | -         |
+| UNDEFINED                                                | QUERY   | DATAPROP   | DATAPROP   | -              | -         |
+| UNDEFINED                                                | QUERY   | OBJECTPROP | OBJECTPROP | -              | -         |
+| All data property belonging to an individual             | QUERY   | IND        | DATAPROP   | ind name       | -         |
+| All object property belonging to an individual           | QUERY   | IND        | OBJECTPROP | ind name       | -         |
+| All classes an individual belongs to                     | QUERY   | CLASS      | IND        | ind name       | -         |
+
+##Utilities
+
+These commands are used to load and save the ontology, toggle the logging
+utilities and more.
+
+| Effects                       | Command | 1st spec. | 2nd spec. | args[0]  | args[1] | args[2]        | args[3]       | args[4]      |
+|:-----------------------------:|:-------:|:---------:|:---------:|:--------:|:-------:|:--------------:|:-------------:|:------------:|
+| UNDEFINED                     | CREATE  | -         | -         | -        | -       | -              | -             | -            |
+|                               |         |           |           |          |         |                |               |              |
+| Create OWLReferences          | LOAD    | FILE      | -         | filepath | iri     | man. flag [^2] | reasoner [^3] | r. flag [^4] |
+| Create OWLReferences          | LOAD    | WEB       | -         | filepath | iri     | man. flag [^2] | reasoner [^3] | r. flag [^4] |
+| Create OWLReferences          | LOAD    | FILE      | MOUNTED   | filepath | iri     | man. flag [^2] | reasoner [^3] | r. flag [^4] |
+| Create OWLReferences          | LOAD    | WEB       | MOUNTED   | filepath | iri     | man. flag [^2] | reasoner [^3] | r. flag [^4] |
+|                               |         |           |           |          |         |                |               |              |
+| Save ontology on file         | SAVE    | -         | -         | filepath | -       | -              | -             | -            |
+| Save ontology with inferences | SAVE    | INFERENCE | -         | filepath | -       | -              | -             | -            |
+|                               |         |           |           |          |         |                |               |              |
+| Mount client on ref. [^5]     | MOUNT   | -         | -         | -        | -       | -              | -             | -            |
+| Unmount client from ref. [^5] | UNMOUNT | -         | -         | -        | -       | -              | -             | -            |
+|                               |         |           |           |          |         |                |               |              |
+| Log to file                   | LOG     | FILE      | ON        | filepath | -       | -              | -             | -            |
+| Stop logging to file          | LOG     | FILE      | OFF       | -        | -       | -              | -             | -            |
+| Log to screen                 | LOG     | SCREEN    | ON        | -        | -       | -              | -             | -            |
+| Stop logging to screen        | LOG     | SCREEN    | OFF       | -        | -       | -              | -             | -            |
+
+
+[^1] Returns a list of candidates. You can check the size of the list to
+check if an individual exists. Size equal to 0 means the individual does 
+not exist.
+
+[^2] **Manipulation flag:** if true, all manipulations on the reference
+will be buffered instead of being executed immediately. You can apply all
+buffered manipulations running the `APPLY` command.
+
+[^3] **Reasoner:** "HERMIT", "PELLET", "FACT", "SNOROCKET". Case insensitive.
+If you add a new reasoner to AMOR, you can call it by just writing the name.
+It will fail if a non-defined reasoner is called.
+
+[^4] **Reasoner flag:** defines if reasoning should be buffered or not.
+If it is, you have to run `REASON` command to run the reasoner.
+
+[^5] **Mount/Unmount:** Each client to the ARMOR service should identify
+itself though the request `client_name` field. `MOUNT` assigns a client 
+id to a reference, and only clients identifying themselves with such id
+can run manipulation commands on such reference. This distinction between
+`client` and `client_name` is useful when many nodes cooperates toward 
+the same goal (e.g. many perception nodes may need to write on the ontology
+at the same time). If you want to be sure a node has exclusive access to 
+a reference, try assigning a unique ID such as its UID.
+Note that if no client is mounted on a reference, then any client can 
+manipulate such reference.
