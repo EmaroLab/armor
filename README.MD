@@ -52,9 +52,9 @@ It adds the following features on top of AMOR:
   
 ##Rosparams
 
-| Rosparam name            | Type   | Function                                        |
-|:------------------------:|:------:|:-----------------------------------------------:|
-| `FULL_ENTITY_IDENTIFIER` | `Bool` | If true, queries returns entities with full IRI |
+| Rosparam name            | Type   | Function                                             | Default   |
+|:------------------------:|:------:|:----------------------------------------------------:|:---------:|
+| `FULL_ENTITY_IDENTIFIER` | `Bool` | If **True**, queries returns entities with full IRI. | **False** |
   
 ##Message structure
   
