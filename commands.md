@@ -90,25 +90,25 @@ enforce this practice.
 These commands are used to load and save the ontology, toggle the logging
 utilities and more.
 
-| Effects                       | Command | 1st spec. | 2nd spec. | args[0]  | args[1] | args[2]        | args[3]       | args[4]      |
-|:-----------------------------:|:-------:|:---------:|:---------:|:--------:|:-------:|:--------------:|:-------------:|:------------:|
-| UNDEFINED                     | CREATE  | -         | -         | -        | -       | -              | -             | -            |
-|                               |         |           |           |          |         |                |               |              |
-| Create OWLReferences          | LOAD    | FILE      | -         | filepath | iri     | man. flag [^2] | reasoner [^3] | r. flag [^4] |
-| Create OWLReferences          | LOAD    | WEB       | -         | filepath | iri     | man. flag [^2] | reasoner [^3] | r. flag [^4] |
-| Create OWLReferences          | LOAD    | FILE      | MOUNTED   | filepath | iri     | man. flag [^2] | reasoner [^3] | r. flag [^4] |
-| Create OWLReferences          | LOAD    | WEB       | MOUNTED   | filepath | iri     | man. flag [^2] | reasoner [^3] | r. flag [^4] |
-|                               |         |           |           |          |         |                |               |              |
-| Save ontology on file         | SAVE    | -         | -         | filepath | -       | -              | -             | -            |
-| Save ontology with inferences | SAVE    | INFERENCE | -         | filepath | -       | -              | -             | -            |
-|                               |         |           |           |          |         |                |               |              |
-| Mount client on ref. [^5]     | MOUNT   | -         | -         | -        | -       | -              | -             | -            |
-| Unmount client from ref. [^5] | UNMOUNT | -         | -         | -        | -       | -              | -             | -            |
-|                               |         |           |           |          |         |                |               |              |
-| Log to file                   | LOG     | FILE      | ON        | filepath | -       | -              | -             | -            |
-| Stop logging to file          | LOG     | FILE      | OFF       | -        | -       | -              | -             | -            |
-| Log to screen                 | LOG     | SCREEN    | ON        | -        | -       | -              | -             | -            |
-| Stop logging to screen        | LOG     | SCREEN    | OFF       | -        | -       | -              | -             | -            |
+| Effects                                     | Command | 1st spec. | 2nd spec. | args[0]  | args[1] | args[2]                      | args[3]                     | args[4]                    |
+|:-------------------------------------------:|:-------:|:---------:|:---------:|:--------:|:-------:|:----------------------------:|:---------------------------:|:--------------------------:|
+| UNDEFINED                                   | CREATE  | -         | -         | -        | -       | -                            | -                           | -                          |
+|                                             |         |           |           |          |         |                              |                             |                            |
+| Create OWLReferences                        | LOAD    | FILE      | -         | filepath | iri     | man. flag <sup>[2](#2)</sup> | reasoner <sup>[3](#3)</sup> | r. flag <sup>[4](#4)</sup> |
+| Create OWLReferences                        | LOAD    | WEB       | -         | filepath | iri     | man. flag <sup>[2](#2)</sup> | reasoner <sup>[3](#3)</sup> | r. flag <sup>[4](#4)</sup> |
+| Create OWLReferences                        | LOAD    | FILE      | MOUNTED   | filepath | iri     | man. flag <sup>[2](#2)</sup> | reasoner <sup>[3](#3)</sup> | r. flag <sup>[4](#4)</sup> |
+| Create OWLReferences                        | LOAD    | WEB       | MOUNTED   | filepath | iri     | man. flag <sup>[2](#2)</sup> | reasoner <sup>[3](#3)</sup> | r. flag <sup>[4](#4)</sup> |
+|                                             |         |           |           |          |         |                              |                             |                            |
+| Save ontology on file                       | SAVE    | -         | -         | filepath | -       | -                            | -                           | -                          |
+| Save ontology with inferences               | SAVE    | INFERENCE | -         | filepath | -       | -                            | -                           | -                          |
+|                                             |         |           |           |          |         |                              |                             |                            |
+| Mount client on ref. <sup>[5](#5)</sup>     | MOUNT   | -         | -         | -        | -       | -                            | -                           | -                          |
+| Unmount client from ref. <sup>[5](#5)</sup> | UNMOUNT | -         | -         | -        | -       | -                            | -                           | -                          |
+|                                             |         |           |           |          |         |                              |                             |                            |
+| Log to file                                 | LOG     | FILE      | ON        | filepath | -       | -                            | -                           | -                          |
+| Stop logging to file                        | LOG     | FILE      | OFF       | -        | -       | -                            | -                           | -                          |
+| Log to screen                               | LOG     | SCREEN    | ON        | -        | -       | -                            | -                           | -                          |
+| Stop logging to screen                      | LOG     | SCREEN    | OFF       | -        | -       | -                            | -                           | -                          |
 
 
 <a name="1">[1]</a>: Returns a list of candidates. You can check the size of the list to
