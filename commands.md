@@ -9,7 +9,7 @@ and debugging reasons, it is strongly advised to always specify it.
 + **Type** args can be any ontology supported type such as *'String'*, *'Integer'*, and more.
 + If you refer to an element that does no yet exist, it will be created 
 (e.g. if you add an individual to a non-existing class, the class will be
-created automatically)
+created automatically).
 
 ##Manipulations
 Commands that somehow change the state of an ontology reference are called

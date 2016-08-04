@@ -50,6 +50,12 @@ It adds the following features on top of AMOR:
   system, consider to incorporate [**AMOR**](https://github.com/EmaroLab/multi_ontology_reference) in your code instead
   of using ARMOR.
   
+##Rosparams
+
+| Rosparam name            | Type   | Function                                        |
+|:------------------------:|:------:|:-----------------------------------------------:|
+| `FULL_ENTITY_IDENTIFIER` | `Bool` | If true, queries returns entities with full IRI |
+  
 ##Message structure
   
 ```
