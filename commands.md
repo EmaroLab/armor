@@ -72,7 +72,7 @@ enforce this practice.
 
 | `queried_objects`                                        | Command | 1st spec.  | 2nd spec.  | args[0]        | args[1]   |
 |:--------------------------------------------------------:|:-------:|:----------:|:----------:|:--------------:|:---------:|
-| Check if an individual exists [^1]                       | QUERY   | IND        | -          | ind name       |           |
+| Check if an individual exists <sup>[1](#1)</sup>         | QUERY   | IND        | -          | ind name       |           |
 | All individuals belonging to a cls                       | QUERY   | IND        | CLASS      | cls name       | -         |
 | UNDEFINED                                                | QUERY   | DATAPROP   | CLASS      | -              | -         |
 | UNDEFINED                                                | QUERY   | OBJECTPROP | CLASS      | -              | -         |
@@ -111,22 +111,22 @@ utilities and more.
 | Stop logging to screen        | LOG     | SCREEN    | OFF       | -        | -       | -              | -             | -            |
 
 
-[^1] Returns a list of candidates. You can check the size of the list to
+<a name="1">[1]</a>: Returns a list of candidates. You can check the size of the list to
 check if an individual exists. Size equal to 0 means the individual does 
 not exist.
 
-[^2] **Manipulation flag:** if true, all manipulations on the reference
+<a name="2">[2]</a>: **Manipulation flag:** if true, all manipulations on the reference
 will be buffered instead of being executed immediately. You can apply all
 buffered manipulations running the `APPLY` command.
 
-[^3] **Reasoner:** "HERMIT", "PELLET", "FACT", "SNOROCKET". Case insensitive.
+<a name="3">[3]</a>: **Reasoner:** "HERMIT", "PELLET", "FACT", "SNOROCKET". Case insensitive.
 If you add a new reasoner to AMOR, you can call it by just writing the name.
 It will fail if a non-defined reasoner is called.
 
-[^4] **Reasoner flag:** defines if reasoning should be buffered or not.
+<a name="4">[4]</a>: **Reasoner flag:** defines if reasoning should be buffered or not.
 If it is, you have to run `REASON` command to run the reasoner.
 
-[^5] **Mount/Unmount:** Each client to the ARMOR service should identify
+<a name="5">[5]</a>: **Mount/Unmount:** Each client to the ARMOR service should identify
 itself though the request `client_name` field. `MOUNT` assigns a client 
 id to a reference, and only clients identifying themselves with such id
 can run manipulation commands on such reference. This distinction between
