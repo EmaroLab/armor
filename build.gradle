@@ -64,6 +64,11 @@ subprojects {
      */
     /* apply plugin: "eclipse" */
     apply plugin: "idea"
+
+    allprojects {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 /*

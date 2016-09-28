@@ -1,4 +1,4 @@
-/*
+    /*
  * Copyright (C) 2014 Alessio Capitanelli.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
@@ -37,12 +37,9 @@ dependencies {
     compile 'org.ros.rosjava_core:rosjava:[0.2,0.3)'
     compile 'org.ros.rosjava_messages:armor_msgs:0.1.0'
     compile 'it.emarolab.amor:amor:0.1.0'
-    compile fileTree(dir: 'libs/OWL_API_3-4-5', include: ['*.jar'])
-    runtime fileTree(dir: 'libs/pellet', include: ['*.jar'])
-    runtime fileTree(dir: 'libs/fact++', include: ['*.jar'])
-    runtime fileTree(dir: 'libs/hermit', include: ['*.jar'])
-    runtime fileTree(dir: 'libs/snorcket', include: ['*.jar'])
-    /* Example of a local subproject dependency */
-    /* compile project(':sibling_gradle_project') */
+
+    compile group: 'com.github.galigator.openllet', name: 'openllet-owlapi', version: '2.5.1'
+    compile group: 'com.github.galigator.openllet', name: 'openllet-jena', version: '2.5.1'
+    compile group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.0.2'
 }
 
