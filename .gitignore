@@ -60,6 +60,7 @@ Thumbs.db
 # Gradle:
 # .idea/gradle.xml
 # .idea/libraries
+.gradle
 
 # Mongo Explorer plugin:
 # .idea/mongoSettings.xml
@@ -171,8 +172,29 @@ msg/_*.py
 *.wikidoc
 
 # eclipse stuff
+.metadata
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.recommenders
+
 .project
+.externalToolBuilders/
+*.pydevproject
 .cproject
+.classpath
+.factorypath
+.buildpath
+.target
+.tern-project
+.texlipse
+.springBeans
+.recommenders/
 
 # qcreator stuff
 CMakeLists.txt.user
