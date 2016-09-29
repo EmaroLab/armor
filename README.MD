@@ -46,7 +46,7 @@ This is necessary only the first time you build the package or after you clean y
 
 Or from a launchfile:
 
-`<node pkg="armor" type="execute" name="armor_service" args="cit.emarolab.armor.ARMORMainService"/>`
+`<node pkg="armor" type="execute" name="armor_service" args="it.emarolab.armor.ARMORMainService"/>`
   
 ##Dependencies
   
