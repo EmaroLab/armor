@@ -40,7 +40,7 @@ Launching rosjava nodes can be a convoluted operation. To make things easier, af
 
 `./gradlew deployApp`
 
-This is necessary only the first time you build the package or after you clean your workspace. You can then launch ARMOR from the command line:
+This is necessary only the first time you build the package or after you hard clean your workspace. You can then launch ARMOR from the command line:
 
 `rosrun armor execute it.emarolab.armor.ARMORMainService`
 
