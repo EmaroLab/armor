@@ -33,6 +33,8 @@ It adds the following features on top of AMOR:
    waiting for long times.
   + **_Easy debugging_**, allows online toggling of terminal/file logging as well as turn on AMOR debug GUI.
   
+Legacy support for OWL api 3.4.5 is available on the [OWL-api3 branch](https://github.com/EmaroLab/armor/tree/OWL-api3). Use it in conjunction with [AMOR OWL-api3 branch](https://github.com/EmaroLab/multi_ontology_reference/tree/OWL-api3).
+  
 ##Dependencies
   
   + [Rosjava](http://wiki.ros.org/rosjava) - to natively run Java code (i.e. *OWL API*) inside a ROS architecture.
