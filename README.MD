@@ -34,6 +34,19 @@ It adds the following features on top of AMOR:
   + **_Easy debugging_**, allows online toggling of terminal/file logging as well as turn on AMOR debug GUI.
   
 Legacy support for OWL api 3.4.5 is available on the [OWL-api3 branch](https://github.com/EmaroLab/armor/tree/OWL-api3). Use it in conjunction with [AMOR OWL-api3 branch](https://github.com/EmaroLab/multi_ontology_reference/tree/OWL-api3).
+
+##Running ARMOR
+Launching rosjava nodes can be a convoluted operation. To make things easier, after building the package for the first time go to the project directory and run the following command:
+
+`./gradlew deployApp`
+
+This is necessary only the first time you build the package or after you clean your workspace. You can then launch the ARMOR from the command line:
+
+`rosrun armor execute it.emarolab.armor.ARMORMainService`
+
+Or from a launchfile:
+
+`<node pkg="armor" type="execute" name="armor_service" args="cit.emarolab.armor.ARMORMainService"/>`
   
 ##Dependencies
   
