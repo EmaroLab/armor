@@ -5,6 +5,10 @@ import it.emarolab.amor.owlInterface.OWLReferences;
 import armor_msgs.ArmorDirectiveRequest;
 import armor_msgs.ArmorDirectiveResponse;
 import it.emarolab.amor.owlInterface.OWLReferencesInterface.OWLReferencesContainer;
+import org.ros.internal.message.Message;
+import org.ros.internal.message.RawMessage;
+import org.ros.message.MessageFactory;
+import org.ros.message.MessageFactoryProvider;
 import org.ros.node.ConnectedNode;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -12,6 +16,8 @@ import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import it.emarolab.amor.owlDebugger.Logger;
+import armor_msgs.*;
+import org.semanticweb.owlapi.util.StringAnnotationVisitor;
 
 import java.util.*;
 
@@ -347,6 +353,45 @@ class ARMORCommand {
                 setResponse(true, 0, "", allObjectlist);
                 return response;
 
+            case QUERY_SPARQL_:
+                // Executes a SPARQL query and returns the result as a string. Optionally, timeout can be set.
+                // args[ String query, string timeout ]
+                // OR args[ String prefix, string select, string where string timeout ]
+                List<Map<String, String>> result = new ArrayList<>();
+
+                if      (args.size() == 1){result = ontoRef.sparql2Msg(args.get(0), null);}
+                else if (args.size() == 2){result = ontoRef.sparql2Msg(args.get(0), Long.valueOf(args.get(1)));}
+                else if (args.size() == 3){result = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), null);}
+                else if (args.size() == 4){result = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), Long.valueOf(args.get(3)));}
+
+                List<String> sparqlResponse = new ArrayList<>();
+                sparqlResponse.add(result.toString().substring(1, result.size() - 2));
+                setResponse(true, 0, "", sparqlResponse);
+                return response;
+
+            case QUERY_SPARQL_FORMATTED:
+                // Executes a SPARQL query and returns the result as a string. Optionally, timeout can be set.
+                // args[ String query, string timeout ]
+                // OR args[ String prefix, string select, string where string timeout ]
+                List<Map<String, String>> result_f = new ArrayList<>();
+
+                if      (args.size() == 1){result_f = ontoRef.sparql2Msg(args.get(0), null);}
+                else if (args.size() == 2){result_f = ontoRef.sparql2Msg(args.get(0), Long.valueOf(args.get(1)));}
+                else if (args.size() == 3){result_f = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), null);}
+                else if (args.size() == 4){result_f = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), Long.valueOf(args.get(3)));}
+
+                List<QueryItem> items = response.getSparqlQueriedObjects();
+
+                result_f.forEach(
+                        item->item.forEach((k, v)->{
+                            QueryItem msgItem = connectedNode.getTopicMessageFactory().newFromType(QueryItem._TYPE);
+                            msgItem.setKey(k);
+                            msgItem.setValue(v);
+                            items.add(msgItem);
+                        }));
+
+                setResponseSparql(true, 0, "", items);
+                return response;
         }
 
         if (!ARMORResourceManager.isAvailable(clientName, referenceName)){
@@ -640,6 +685,20 @@ class ARMORCommand {
             }
         }
     }
+
+    private void setResponseSparql(Boolean success, int exitCode, String errorMessage, List<QueryItem> queriedObjects){
+        response.setSuccess(success);
+        response.setExitCode(exitCode);
+        response.setErrorDescription(errorMessage);
+        response.setSparqlQueriedObjects(queriedObjects);
+
+        if (!referenceName.equals("")) {
+            OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
+            if (ontoRef.getReasoner() != null) {
+                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            }
+        }
+    }
     
     private List<String> getStringListFromQuery(Set<?> queriedResults, OWLReferences ontoRef){
         if (!fullIRIName){
@@ -675,7 +734,6 @@ class ARMORCommand {
         }
         return null;
     }
-
 
     private enum OWLReferenceCommandsEnum {
 
@@ -715,6 +773,8 @@ class ARMORCommand {
         QUERY_OBJECTPROP_OBJECTPROP,
         QUERY_IND_DATAPROP,
         QUERY_IND_OBJECTPROP,
+        QUERY_SPARQL_,
+        QUERY_SPARQL_FORMATTED,
 
         /////////////////    MANIPULATION COMMANDS    /////////////////
 

@@ -70,20 +70,21 @@ they are being used in performance sensitive processes. An alternative
 and stricter version of the mount system may be implemented in future to
 enforce this practice.
 
-| `queried_objects`                                        | Command | 1st spec.  | 2nd spec.  | args[0]        | args[1]   |
-|:--------------------------------------------------------:|:-------:|:----------:|:----------:|:--------------:|:---------:|
-| Check if an individual exists <sup>[1](#1)</sup>         | QUERY   | IND        | -          | ind name       |           |
-| All individuals belonging to a cls                       | QUERY   | IND        | CLASS      | cls name       | -         |
-| UNDEFINED                                                | QUERY   | DATAPROP   | CLASS      | -              | -         |
-| UNDEFINED                                                | QUERY   | OBJECTPROP | CLASS      | -              | -         |
-| All values of a data property belonging to an individual | QUERY   | DATAPROP   | IND        | prop name      | ind name  |
-| All values of a data property belonging to an individual | QUERY   | OBJECTPROP | IND        | prop name      | ind name  |
-| All classes belonging to a super-class                   | QUERY   | CLASS      | CLASS      | super-cls name | -         |
-| UNDEFINED                                                | QUERY   | DATAPROP   | DATAPROP   | -              | -         |
-| UNDEFINED                                                | QUERY   | OBJECTPROP | OBJECTPROP | -              | -         |
-| All data property belonging to an individual             | QUERY   | IND        | DATAPROP   | ind name       | -         |
-| All object property belonging to an individual           | QUERY   | IND        | OBJECTPROP | ind name       | -         |
-| All classes an individual belongs to                     | QUERY   | CLASS      | IND        | ind name       | -         |
+| `queried_objects`                                        | Command | 1st spec.  | 2nd spec.  | args[0]                         | args[1]                    |
+|:--------------------------------------------------------:|:-------:|:----------:|:----------:|:-------------------------------:|:--------------------------:|
+| Check if an individual exists <sup>[1](#1)</sup>         | QUERY   | IND        | -          | ind name                        | -                          |
+| All individuals belonging to a cls                       | QUERY   | IND        | CLASS      | cls name                        | -                          |
+| UNDEFINED                                                | QUERY   | DATAPROP   | CLASS      | -                               | -                          |
+| UNDEFINED                                                | QUERY   | OBJECTPROP | CLASS      | -                               | -                          |
+| All values of a data property belonging to an individual | QUERY   | DATAPROP   | IND        | prop name                       | ind name                   |
+| All values of a data property belonging to an individual | QUERY   | OBJECTPROP | IND        | prop name                       | ind name                   |
+| All classes belonging to a super-class                   | QUERY   | CLASS      | CLASS      | super-cls name                  | -                          |
+| UNDEFINED                                                | QUERY   | DATAPROP   | DATAPROP   | -                               | -                          |
+| UNDEFINED                                                | QUERY   | OBJECTPROP | OBJECTPROP | -                               | -                          |
+| All data property belonging to an individual             | QUERY   | IND        | DATAPROP   | ind name                        | -                          |
+| All object property belonging to an individual           | QUERY   | IND        | OBJECTPROP | ind name                        | -                          |
+| All classes an individual belongs to                     | QUERY   | CLASS      | IND        | ind name                        | -                          |
+| Query using SPARQL syntax                                | QUERY   | SPARQL     | -          | sparql query <sup>[2](#2)</sup> | timeout <sup>[2](#2)</sup> | 
 
 ##Utilities
 
@@ -94,16 +95,16 @@ utilities and more.
 |:-------------------------------------------:|:-------:|:---------:|:---------:|:--------:|:-------:|:----------------------------:|:---------------------------:|:--------------------------:|
 | UNDEFINED                                   | CREATE  | -         | -         | -        | -       | -                            | -                           | -                          |
 |                                             |         |           |           |          |         |                              |                             |                            |
-| Create OWLReferences                        | LOAD    | FILE      | -         | filepath | iri     | man. flag <sup>[2](#2)</sup> | reasoner <sup>[3](#3)</sup> | r. flag <sup>[4](#4)</sup> |
-| Create OWLReferences                        | LOAD    | WEB       | -         | filepath | iri     | man. flag <sup>[2](#2)</sup> | reasoner <sup>[3](#3)</sup> | r. flag <sup>[4](#4)</sup> |
-| Create OWLReferences                        | LOAD    | FILE      | MOUNTED   | filepath | iri     | man. flag <sup>[2](#2)</sup> | reasoner <sup>[3](#3)</sup> | r. flag <sup>[4](#4)</sup> |
-| Create OWLReferences                        | LOAD    | WEB       | MOUNTED   | filepath | iri     | man. flag <sup>[2](#2)</sup> | reasoner <sup>[3](#3)</sup> | r. flag <sup>[4](#4)</sup> |
+| Create OWLReferences                        | LOAD    | FILE      | -         | filepath | iri     | man. flag <sup>[3](#3)</sup> | reasoner <sup>[4](#4)</sup> | r. flag <sup>[6](#6)</sup> |
+| Create OWLReferences                        | LOAD    | WEB       | -         | filepath | iri     | man. flag <sup>[3](#3)</sup> | reasoner <sup>[4](#4)</sup> | r. flag <sup>[6](#6)</sup> |
+| Create OWLReferences                        | LOAD    | FILE      | MOUNTED   | filepath | iri     | man. flag <sup>[3](#3)</sup> | reasoner <sup>[4](#4)</sup> | r. flag <sup>[6](#6)</sup> |
+| Create OWLReferences                        | LOAD    | WEB       | MOUNTED   | filepath | iri     | man. flag <sup>[3](#3)</sup> | reasoner <sup>[4](#4)</sup> | r. flag <sup>[6](#6)</sup> |
 |                                             |         |           |           |          |         |                              |                             |                            |
 | Save ontology on file                       | SAVE    | -         | -         | filepath | -       | -                            | -                           | -                          |
 | Save ontology with inferences               | SAVE    | INFERENCE | -         | filepath | -       | -                            | -                           | -                          |
 |                                             |         |           |           |          |         |                              |                             |                            |
-| Mount client on ref. <sup>[5](#5)</sup>     | MOUNT   | -         | -         | -        | -       | -                            | -                           | -                          |
-| Unmount client from ref. <sup>[5](#5)</sup> | UNMOUNT | -         | -         | -        | -       | -                            | -                           | -                          |
+| Mount client on ref. <sup>[6](#6)</sup>     | MOUNT   | -         | -         | -        | -       | -                            | -                           | -                          |
+| Unmount client from ref. <sup>[6](#6)</sup> | UNMOUNT | -         | -         | -        | -       | -                            | -                           | -                          |
 |                                             |         |           |           |          |         |                              |                             |                            |
 | Log to file                                 | LOG     | FILE      | ON        | filepath | -       | -                            | -                           | -                          |
 | Stop logging to file                        | LOG     | FILE      | OFF       | -        | -       | -                            | -                           | -                          |
@@ -115,18 +116,22 @@ utilities and more.
 check if an individual exists. Size equal to 0 means the individual does 
 not exist.
 
-<a name="2">[2]</a>: **Manipulation flag:** if true, all manipulations on the reference
+<a name="1">[2]</a>: Timeout is optional. SPARQL query can also be expressed as separate
+ PREFIX, SELECT and WHERE directives. Takes from 1 to 4 arguments depending on the case. 
+ Slower than the non formatted call.
+
+<a name="2">[3]</a>: **Manipulation flag:** if true, all manipulations on the reference
 will be buffered instead of being executed immediately. You can apply all
 buffered manipulations running the `APPLY` command.
 
-<a name="3">[3]</a>: **Reasoner:** "HERMIT", "PELLET", "FACT", "SNOROCKET". Case insensitive.
+<a name="3">[4]</a>: **Reasoner:** "HERMIT", "PELLET", "FACT", "SNOROCKET". Case insensitive.
 If you add a new reasoner to AMOR, you can call it by just writing the name.
 It will fail if a non-defined reasoner is called.
 
-<a name="4">[4]</a>: **Reasoner flag:** defines if reasoning should be buffered or not.
+<a name="4">[5]</a>: **Reasoner flag:** defines if reasoning should be buffered or not.
 If it is, you have to run `REASON` command to run the reasoner.
 
-<a name="5">[5]</a>: **Mount/Unmount:** Each client to the ARMOR service should identify
+<a name="5">[6]</a>: **Mount/Unmount:** Each client to the ARMOR service should identify
 itself though the request `client_name` field. `MOUNT` assigns a client 
 id to a reference, and only clients identifying themselves with such id
 can run manipulation commands on such reference. This distinction between
