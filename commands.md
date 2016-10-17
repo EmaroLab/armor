@@ -84,7 +84,8 @@ enforce this practice.
 | All data property belonging to an individual             | QUERY   | IND        | DATAPROP   | ind name                        | -                          |
 | All object property belonging to an individual           | QUERY   | IND        | OBJECTPROP | ind name                        | -                          |
 | All classes an individual belongs to                     | QUERY   | CLASS      | IND        | ind name                        | -                          |
-| Query using SPARQL syntax                                | QUERY   | SPARQL     | -          | sparql query <sup>[2](#2)</sup> | timeout <sup>[2](#2)</sup> | 
+| Query using SPARQL syntax                                | QUERY   | SPARQL     | -          | sparql query <sup>[2](#2)</sup> | timeout <sup>[2](#2)</sup> |
+| Query using SPARQL syntax                                | QUERY   | SPARQL     | FORMATTED  | sparql query <sup>[2](#2)</sup> | timeout <sup>[2](#2)</sup> |
 
 ##Utilities
 
