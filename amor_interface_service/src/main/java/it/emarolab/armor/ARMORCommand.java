@@ -365,7 +365,7 @@ class ARMORCommand {
                 else if (args.size() == 4){result = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), Long.valueOf(args.get(3)));}
 
                 List<String> sparqlResponse = new ArrayList<>();
-                sparqlResponse.add(result.toString().substring(1, result.size() - 2));
+                sparqlResponse.add(result.toString().replace("[", "").replace("]", ""));
                 setResponse(true, 0, "", sparqlResponse);
                 return response;
 
