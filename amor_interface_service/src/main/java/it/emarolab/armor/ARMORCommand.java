@@ -5,6 +5,7 @@ import it.emarolab.amor.owlInterface.OWLReferences;
 import armor_msgs.ArmorDirectiveRequest;
 import armor_msgs.ArmorDirectiveResponse;
 import it.emarolab.amor.owlInterface.OWLReferencesInterface.OWLReferencesContainer;
+import org.apache.jena.query.QueryCancelledException;
 import org.ros.internal.message.Message;
 import org.ros.internal.message.RawMessage;
 import org.ros.message.MessageFactory;
@@ -358,15 +359,21 @@ class ARMORCommand {
                 // args[ String query, string timeout ]
                 // OR args[ String prefix, string select, string where string timeout ]
                 List<Map<String, String>> result = new ArrayList<>();
-
-                if      (args.size() == 1){result = ontoRef.sparql2Msg(args.get(0), null);}
-                else if (args.size() == 2){result = ontoRef.sparql2Msg(args.get(0), Long.valueOf(args.get(1)));}
-                else if (args.size() == 3){result = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), null);}
-                else if (args.size() == 4){result = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), Long.valueOf(args.get(3)));}
+                Boolean timedout = false;
+                try{
+                    if      (args.size() == 1){result = ontoRef.sparql2Msg(args.get(0), null);}
+                    else if (args.size() == 2){result = ontoRef.sparql2Msg(args.get(0), Long.valueOf(args.get(1)));}
+                    else if (args.size() == 3){result = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), null);}
+                    else if (args.size() == 4){result = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), Long.valueOf(args.get(3)));}
+                }catch (QueryCancelledException e) {
+                    timedout = true;
+                    connectedNode.getLog().error("SPARQL query timed out. %s", e);
+                    System.out.println("SPARQL query timed out.");
+                }
 
                 List<String> sparqlResponse = new ArrayList<>();
                 sparqlResponse.add(result.toString().replace("[", "").replace("]", ""));
-                setResponse(true, 0, "", sparqlResponse);
+                setResponseSparql(true, 0, "", timedout, sparqlResponse);
                 return response;
 
             case QUERY_SPARQL_FORMATTED:
@@ -374,11 +381,17 @@ class ARMORCommand {
                 // args[ String query, string timeout ]
                 // OR args[ String prefix, string select, string where string timeout ]
                 List<Map<String, String>> result_f = new ArrayList<>();
-
-                if      (args.size() == 1){result_f = ontoRef.sparql2Msg(args.get(0), null);}
-                else if (args.size() == 2){result_f = ontoRef.sparql2Msg(args.get(0), Long.valueOf(args.get(1)));}
-                else if (args.size() == 3){result_f = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), null);}
-                else if (args.size() == 4){result_f = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), Long.valueOf(args.get(3)));}
+                Boolean timedoutF = false;
+                try{
+                    if      (args.size() == 1){result_f = ontoRef.sparql2Msg(args.get(0), null);}
+                    else if (args.size() == 2){result_f = ontoRef.sparql2Msg(args.get(0), Long.valueOf(args.get(1)));}
+                    else if (args.size() == 3){result_f = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), null);}
+                    else if (args.size() == 4){result_f = ontoRef.sparql2Msg(args.get(0) + args.get(1) + args.get(2), Long.valueOf(args.get(3)));}
+                }catch (QueryCancelledException e) {
+                    timedoutF = true;
+                    connectedNode.getLog().error("SPARQL query timed out. %s", e);
+                    System.out.println("SPARQL query timed out.");
+                }
 
                 List<QueryItem> items = response.getSparqlQueriedObjects();
 
@@ -390,7 +403,7 @@ class ARMORCommand {
                             items.add(msgItem);
                         }));
 
-                setResponseSparql(true, 0, "", items);
+                setResponseSparqlF(true, 0, "", timedoutF, items);
                 return response;
         }
 
@@ -663,6 +676,7 @@ class ARMORCommand {
         response.setExitCode(exitCode);
         response.setErrorDescription(errorMessage);
         response.setQueriedObjects(new ArrayList<String>());
+        response.setTimeout(false);
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
@@ -677,6 +691,7 @@ class ARMORCommand {
         response.setExitCode(exitCode);
         response.setErrorDescription(errorMessage);
         response.setQueriedObjects(queriedObjects);
+        response.setTimeout(false);
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
@@ -686,11 +701,27 @@ class ARMORCommand {
         }
     }
 
-    private void setResponseSparql(Boolean success, int exitCode, String errorMessage, List<QueryItem> queriedObjects){
+    private void setResponseSparql(Boolean success, int exitCode, String errorMessage, Boolean timeout, List<String> queriedObjects){
+        response.setSuccess(success);
+        response.setExitCode(exitCode);
+        response.setErrorDescription(errorMessage);
+        response.setQueriedObjects(queriedObjects);
+        response.setTimeout(timeout);
+
+        if (!referenceName.equals("")) {
+            OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
+            if (ontoRef.getReasoner() != null) {
+                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            }
+        }
+    }
+
+    private void setResponseSparqlF(Boolean success, int exitCode, String errorMessage, Boolean timeout, List<QueryItem> queriedObjects){
         response.setSuccess(success);
         response.setExitCode(exitCode);
         response.setErrorDescription(errorMessage);
         response.setSparqlQueriedObjects(queriedObjects);
+        response.setTimeout(timeout);
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);

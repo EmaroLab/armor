@@ -117,9 +117,11 @@ utilities and more.
 check if an individual exists. Size equal to 0 means the individual does 
 not exist.
 
-<a name="1">[2]</a>: Timeout is optional. SPARQL query can also be expressed as separate
- PREFIX, SELECT and WHERE directives. Takes from 1 to 4 arguments depending on the case. 
- Slower than the non formatted call.
+<a name="1">[2]</a>: Timeout is optional, it will return all solutions found
+until the query times out. SPARQL query can also be expressed as separate
+ PREFIX, SELECT and WHERE query sections. Takes from 1 to 4 arguments depending on the case. 
+ `QUERY_SPARQL` returns the queried objects in the `queried_objects` field
+ while `QUERY_SPARQL_FORMATTED` returns it in `sparql_queried_objects`. 
 
 <a name="2">[3]</a>: **Manipulation flag:** if true, all manipulations on the reference
 will be buffered instead of being executed immediately. You can apply all

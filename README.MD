@@ -17,7 +17,7 @@ AMOR is a complete library of helper functions for OWL ontologies with some rema
   + Extensive logging.
   + Out-of-the-box support for most reasoners. Easy to add more.
   + Based on latest standards: Java 8 and OWL API 5.
-  + Support for SPARQL queries. 
+  + Support for SPARQL queries (Only with Pellet/Openllet). 
   
 ARMOR's main goal is to ease the use of ontologies in robotics by bringing these features to developers working with ROS.
 Not everyone in the ROS community is a Java developer, even more rarely someone used the low-level OWL API. 
@@ -103,9 +103,12 @@ The complete list of **commands** and **directives** can be found [here](https:/
 | *success*                | *bool*                                                          |
 | *exit_code*              | *int32*                                                         |
 | *error_description*      | *string*                                                        |
-| *is_consistent*          | *optional*, *bool*, returns reference consistency               |
+| *is_consistent*          | *optional*, *bool*, `true` if reference is consistent           |
+| *timeout*                | *optional*, *bool*, `true` if SPARQL query timed out            |
 | *queried_objects*        | *optional*, *list string*, returns list of queried objects      |
 | *sparql_queried_objects* | *optional*, *list QueryItem* (key-value couples)                |
+
+**NOTE:** *sparql_queried_objects* is used only in `QUERY_SPARQL_FORMATTED` calls.
 
 ###Error codes
 
