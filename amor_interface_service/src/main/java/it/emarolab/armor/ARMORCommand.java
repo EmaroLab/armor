@@ -334,9 +334,9 @@ class ARMORCommand {
             case QUERY_IND_DATAPROP:
                 // Queries all data properties belonging to an individual
                 // args[ String indName ]
-                Set<OWLEnquirer.DataPropertyRelatios> dataProps = ontoRef.getDataPropertyB2Individual(args.get(0));
+                Set<OWLEnquirer.DataPropertyRelations> dataProps = ontoRef.getDataPropertyB2Individual(args.get(0));
                 Set<OWLDataProperty> dataObjects = new HashSet<>();
-                for (OWLEnquirer.DataPropertyRelatios prop : dataProps){
+                for (OWLEnquirer.DataPropertyRelations prop : dataProps){
                     dataObjects.add(prop.getProperty());}
                 List<String> allDataList = getStringListFromQuery(dataObjects, ontoRef);
                 setResponse(true, 0, "", allDataList);
@@ -345,10 +345,10 @@ class ARMORCommand {
             case QUERY_IND_OBJECTPROP:
                 // Queries all object properties belonging to an individual
                 // args[ String indName ]
-                Set<OWLEnquirer.ObjectPropertyRelatios> objectProps
+                Set<OWLEnquirer.ObjectPropertyRelations> objectProps
                         = ontoRef.getObjectPropertyB2Individual(args.get(0));
                 Set<OWLObjectProperty> propObjects = new HashSet<>();
-                for (OWLEnquirer.ObjectPropertyRelatios prop : objectProps){
+                for (OWLEnquirer.ObjectPropertyRelations prop : objectProps){
                     propObjects.add(prop.getProperty());}
                 List<String> allObjectlist = getStringListFromQuery(propObjects, ontoRef);
                 setResponse(true, 0, "", allObjectlist);
