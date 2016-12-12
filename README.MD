@@ -7,7 +7,7 @@ of use, ARMOR provides a large share of OWL APIs functions and capabilities in a
 offers increased flexibility compared to previous ontological systems running under ROS.
 
 ARMOR's main goal is to ease the use of ontologies in robotics by bringing these features to developers working under ROS.
-Not everyone in the ROS community is a Java developer, it is even rare to find someone familiar with OWL APIs. 
+Not everyone in the ROS community is a Java developer, it is even rarer to find someone familiar with OWL APIs. 
 ARMOR hides such implementation details and speeds up the development of applications based on semantic knowledge.
 Notable features include:
   
