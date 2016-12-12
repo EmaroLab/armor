@@ -11,16 +11,16 @@ Not everyone in the ROS community is a Java developer, it is even rare to find w
 ARMOR hides such implementation details and speeds up the development of applications based on semantic knowledge.
 Notable features include:
   
-  + Support for multiple ontologies.
-  + Ensures thread-safe ontology manipulations.
-  + Implements a wide range of functions: from simple "add an individual" to more esoteric "modify an SWRL rule".
-  + Excellent performances which can be further customized based on user needs.
-  + Ontology debug GUI available (currently working but not stable).
-  + Extensive logging.
-  + Out-of-the-box support for most reasoners. Easy to add more.
-  + Based on latest standards: Java 8 and OWL API 5.
-  + Support for SPARQL queries (Only with Pellet/Openllet). 
-  
+  + Support for multiple ontologies
+  + Ensures thread-safe ontology manipulations
+  + Implements a wide range of functions: from simple "add an individual" to more esoteric "modify an SWRL rule"
+  + Excellent performances which can be further customized based on user needs
+  + Ontology debug GUI available (currently working but not stable)
+  + Extensive logging
+  + Out-of-the-box support for most reasoners. Easy to add more
+  + Based on latest standards: Java 8 and OWL API 5
+  + Support for SPARQL queries (Only with Pellet/Openllet)
+ 
 ARMOR is based on **AMOR** - a Multi-Ontology Reference library (a ROS ready version is available [here](https://github.com/EmaroLab/multi_ontology_reference)), offering a service-client interface for the vast majority of its functions, with some exceptions of rarer use. As a rule of thumb, as long as you create your own ontology offline and use ARMOR at runtime to populate, modify and query it; you should be good to go.
 
 ARMOR expands AMOR capabilities in the following ways:
