@@ -6,28 +6,24 @@ to load, query and modify multiple ontologies and requires very little knowledge
 of use, ARMOR provides a large share of OWL APIs functions and capabilities in a simple server-client architecture and
 offers increased flexibility compared to previous ontological systems running under ROS.
 
-ARMOR is based on **AMOR** - a Multi-Ontology Reference library ([here](https://github.com/EmaroLab/multi_ontology_reference) the link to the ROS library version used by ARMOR).
-AMOR is a complete library of helper functions for OWL ontologies with some remarkable features.
+ARMOR's main goal is to ease the use of ontologies in robotics by bringing these features to developers working under ROS.
+Not everyone in the ROS community is a Java developer, it is even rarer to find someone familiar with OWL APIs. 
+ARMOR hides such implementation details and speeds up the development of applications based on semantic knowledge.
+Notable features include:
   
-  + Support for multiple ontologies.
-  + Ensures thread-safe ontology manipulations.
-  + Implements a wide range of functions: from simple "add an individual" to more esoteric "modify an SWRL rule".
-  + Excellent performances which can be further customized based on user needs.
-  + Ontology debug GUI available (currently working but not stable).
-  + Extensive logging.
-  + Out-of-the-box support for most reasoners. Easy to add more.
-  + Based on latest standards: Java 8 and OWL API 5.
-  + Support for SPARQL queries (Only with Pellet/Openllet). 
-  
-ARMOR's main goal is to ease the use of ontologies in robotics by bringing these features to developers working with ROS.
-Not everyone in the ROS community is a Java developer, even more rarely someone used the low-level OWL API. 
-As a consequence, we decided to hide this complexity inside of ARMOR. 
-  
-ARMOR offers a service-client interface for the vast majority of AMOR functions, with some notable exceptions of rare 
-use. As a rule of thumb, as long as you create your own ontological architecture offline and use ARMOR at runtime to 
-populate, modify and query it, you should be good to go.
+  + Support for multiple ontologies
+  + Ensures thread-safe ontology manipulations
+  + Implements a wide range of functions: from simple "add an individual" to more esoteric "modify an SWRL rule"
+  + Excellent performances which can be further customized based on user needs
+  + Ontology debug GUI available (currently working but not stable)
+  + Extensive logging
+  + Out-of-the-box support for most reasoners. Easy to add more
+  + Based on latest standards: Java 8 and OWL API 5
+  + Support for SPARQL queries (Only with Pellet/Openllet)
+ 
+ARMOR is based on **AMOR** - a Multi-Ontology Reference library (a ROS ready version is available [here](https://github.com/EmaroLab/multi_ontology_reference)), offering a service-client interface for the vast majority of its functions, with some exceptions of rarer use. As a rule of thumb, as long as you create your own ontology offline and use ARMOR at runtime to populate, modify and query it; you should be good to go.
 
-It adds the following features on top of AMOR:
+ARMOR expands AMOR capabilities in the following ways:
   
   + **_Flexible mount system_**, allows one or more ROS clients to identify themselves and mount on an ontology reference to
    prevent other processes from modifying its state. Excluded processes can still query the locked ontologies to avoid 
@@ -57,10 +53,8 @@ Or from a launchfile:
   
 ##Client
   
-  Once ARMOR is running, you can call it fom any client node written in your preferred language (C++, Python or Java if 
-  you have Rosjava installed). As an example, you can have a look at [armor_py](https://github.com/EmaroLab/armor_py_api), a Python library to easily modify and
-  query an ontology from a Python script. Of course, if you are working under Python you can use *armor_py* itself. 
-  The library is still work in progress but it should expand quickly as more functions are needed.
+  Once ARMOR is running, you can call it fom any client node written in your preferred language (C++, Python or Java). As an example, you can have a look at [armor_py](https://github.com/EmaroLab/armor_py_api), a client library written in Python.
+  The library currently implements only a small number of functions, but they are stable and mmore will be added as they are needed.
   
   If you feel brave, you are comfortable with Java and you need some advanced feature and increased control over your 
   system, consider to incorporate [**AMOR**](https://github.com/EmaroLab/multi_ontology_reference) in your code instead
