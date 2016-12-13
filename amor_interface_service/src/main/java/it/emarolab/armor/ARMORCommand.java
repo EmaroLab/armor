@@ -433,7 +433,7 @@ class ARMORCommand {
 
             case REASON__:
                 // Run the reasoner
-                ontoRef.synchroniseReasoner();
+                ontoRef.synchronizeReasoner();
                 setResponse(true, 0, "");
                 return response;
 
