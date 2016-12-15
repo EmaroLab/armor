@@ -17,7 +17,7 @@ Notable features include:
   + Excellent performances which can be further customized based on user needs
   + Ontology debug GUI available (currently working but not stable)
   + Extensive logging
-  + Out-of-the-box support for most reasoners. Easy to add more
+  + Out-of-the-box support for most reasoners, easy to add more
   + Based on latest standards: Java 8 and OWL API 5
   + Support for SPARQL queries (Only with Pellet/Openllet)
  
@@ -54,7 +54,7 @@ Or from a launchfile:
 ##Client
   
   Once ARMOR is running, you can call it fom any client node written in your preferred language (C++, Python or Java). As an example, you can have a look at [armor_py](https://github.com/EmaroLab/armor_py_api), a client library written in Python.
-  The library currently implements only a small number of functions, but they are stable and mmore will be added as they are needed.
+  The library currently implements only a small number of functions, but they are stable and more will be added as they are needed.
   
   If you feel brave, you are comfortable with Java and you need some advanced feature and increased control over your 
   system, consider to incorporate [**AMOR**](https://github.com/EmaroLab/multi_ontology_reference) in your code instead
