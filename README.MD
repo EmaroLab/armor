@@ -118,3 +118,9 @@ The complete list of **commands** and **directives** can be found [here](https:/
 | **203**                  | *Cannot mount client on specified reference*                    |
 | **204**                  | *Debug only, command defined but not implemented*               |
 | **205**                  | *Non-existing command/specification*                            |
+
+
+## Contacts
+For comment, discussions or support refer to this git repository or contact us at:
+ - [alessio.capitanelli@dibris.unige.it](mailto:alessio.capitanelli@dibris.unige.it),
+ - [luca.buoncompagni@edu.unige.it](mailto:luca.buoncompagni@edu.unige.it).
