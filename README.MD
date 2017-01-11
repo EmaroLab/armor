@@ -32,7 +32,9 @@ ARMOR expands AMOR capabilities in the following ways:
   
 Legacy support for OWL api 3.4.5 is available on the [OWL-api3 branch](https://github.com/EmaroLab/armor/tree/OWL-api3). Use it in conjunction with [AMOR OWL-api3 branch](https://github.com/EmaroLab/multi_ontology_reference/tree/OWL-api3).
 
-The full project including ARMOR, AMOR and the required ROS messages can be downloaded from this [**repository**](https://github.com/EmaroLab/ros_multi_ontology_references.git).
+The latest stable release of this project and its direct dependencies (ARMOR, AMOR and the required ROS messages) can be downloaded from this [**repository**](https://github.com/EmaroLab/ros_multi_ontology_references.git).
+
+You will also need [**Rosjava**](http://wiki.ros.org/rosjava) installed. 
 
 ##Running ARMOR
 Launching rosjava nodes can be a convoluted operation. To make things easier, after building the package for the first time go to the project directory and run the following command:
