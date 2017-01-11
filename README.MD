@@ -63,7 +63,7 @@ Or from a launchfile:
   The library currently implements only a small number of functions, but they are stable and more will be added as they are needed.
   
   If you feel brave, you are comfortable with Java and you need some advanced feature and increased control over your 
-  system, consider to incorporate [**AMOR**](https://github.com/EmaroLab/multi_ontology_reference) in your code instead
+  system, consider to incorporate [AMOR](https://github.com/EmaroLab/multi_ontology_reference) in your code instead
   of using ARMOR.
   
 ##Rosparams
