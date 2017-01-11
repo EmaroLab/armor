@@ -38,9 +38,9 @@ The latest stable release of this project and its direct dependencies (ARMOR, AM
 
 Else, you can manually download the latest release of each module from the following repositories:
 
-+ [**ARMOR**]  https://github.com/EmaroLab/armor
-+ [**AMOR**]  https://github.com/EmaroLab/multi_ontology_reference
-+ [**armor_msgs**] https://github.com/EmaroLab/armor_msgs
++ [**ARMOR**](https://github.com/EmaroLab/armor)
++ [**AMOR**](https://github.com/EmaroLab/multi_ontology_reference)
++ [**armor_msgs**](https://github.com/EmaroLab/armor_msgs)
 
 To build both AMOR and ARMOR, you will need [**Rosjava**](http://wiki.ros.org/rosjava) installed.
 
