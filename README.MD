@@ -94,7 +94,9 @@ args: ['']"
 | *secondary_command_spec* | *optional*, secondary command specification                     |
 | *args*                   | *optional*, list of arguments (e.g. list of individuals to add) |
   
-The complete list of **commands** and **directives** can be found [**here**](https://github.com/EmaroLab/armor/blob/master/commands.md).
+The complete list of **commands** and **directives** can be found here: 
+
+[**COMMANDS DOCUMENTATION**](https://github.com/EmaroLab/armor/blob/master/commands.md)
 
 ###Response
 
