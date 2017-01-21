@@ -6,10 +6,6 @@ import armor_msgs.ArmorDirectiveRequest;
 import armor_msgs.ArmorDirectiveResponse;
 import it.emarolab.amor.owlInterface.OWLReferencesInterface.OWLReferencesContainer;
 import org.apache.jena.query.QueryCancelledException;
-import org.ros.internal.message.Message;
-import org.ros.internal.message.RawMessage;
-import org.ros.message.MessageFactory;
-import org.ros.message.MessageFactoryProvider;
 import org.ros.node.ConnectedNode;
 import org.semanticweb.owlapi.model.OWLNamedIndividual;
 import org.semanticweb.owlapi.model.OWLLiteral;
@@ -18,7 +14,6 @@ import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLClass;
 import it.emarolab.amor.owlDebugger.Logger;
 import armor_msgs.*;
-import org.semanticweb.owlapi.util.StringAnnotationVisitor;
 
 import java.util.*;
 
