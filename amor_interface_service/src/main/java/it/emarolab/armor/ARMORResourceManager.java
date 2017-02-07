@@ -217,6 +217,11 @@ class ARMORResourceManager {
         return ontologies;
     }
 
+    static String getOntologyMountedClient(String ontology){
+        String client = mountedOntologiesTable.get(ontology);
+        return client;
+    }
+
     public static Set<String> getRegisteredClientsNames(){
         Set<String> clients = new HashSet<>();
         for (String client : mountedOntologiesTable.values()){

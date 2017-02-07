@@ -111,7 +111,8 @@ utilities and more.
 | Stop logging to file                        | LOG     | FILE      | OFF       | -        | -       | -                            | -                           | -                          |
 | Log to screen                               | LOG     | SCREEN    | ON        | -        | -       | -                            | -                           | -                          |
 | Stop logging to screen                      | LOG     | SCREEN    | OFF       | -        | -       | -                            | -                           | -                          |
-
+| Gets the list of loaded references          | GET     | ALL       | REFS      | -        | -       | -                            | -                           | -                          |
+| Gets the client id mounted on a reference   | GET     | REF       | CLIENT    | refName  | -       | -                            | -                           | -                          |
 
 <a name="1">[1]</a>: Returns a list of candidates. You can check the size of the list to
 check if an individual exists. Size equal to 0 means the individual does 

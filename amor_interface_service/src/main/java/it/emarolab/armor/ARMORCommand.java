@@ -48,11 +48,11 @@ class ARMORCommand {
     private String referenceName;
     private String clientName;
     private List<String> args;
-    private ArmorDirectiveResponse response;
+    private ArmorDirectiveRes response;
     private Boolean fullIRIName;
     private ConnectedNode connectedNode;
 
-    ARMORCommand(ArmorDirectiveRequest request, ArmorDirectiveResponse response,
+    ARMORCommand(ArmorDirectiveReq request, ArmorDirectiveRes response,
                         final Boolean fullIRIName, final ConnectedNode connectedNode){
 
         String PrimaryCommandSpec = "";
@@ -91,11 +91,11 @@ class ARMORCommand {
 
     }
 
-    ArmorDirectiveResponse getServiceResponse() {
+    ArmorDirectiveRes getServiceResponse() {
         return response;
     }
 
-    ArmorDirectiveResponse executeCommand(){
+    ArmorDirectiveRes executeCommand(){
 
         OWLReferences ontoRef = (OWLReferences)OWLReferencesContainer.getOWLReferences(referenceName);
         String formattedCommand = fullCommand.toUpperCase().replaceAll(COMMAND_DELIMITER, "_");
@@ -223,6 +223,22 @@ class ARMORCommand {
                     setResponse(false, 203, errorMessage);
                     connectedNode.getLog().error(errorMessage);
                 }
+                return response;
+
+            case GET_ALL_REFS:
+                // Returns the lis of all references currently available
+                Set<String> refs = ARMORResourceManager.getOntologiesNames();
+                List<String> refsList = new ArrayList<>();
+                refsList.addAll(refs);
+                setResponse(true, 0, "", refsList);
+                return response;
+
+            case GET_REF_CLIENT:
+                // return the client id mounted on a reference
+                List<String> clientList = new ArrayList<>();
+                String client = ARMORResourceManager.getOntologyMountedClient(args.get(0));
+                clientList.add(client);
+                setResponse(true, 0, "", clientList);
                 return response;
 
             case DROP__:
@@ -776,6 +792,8 @@ class ARMORCommand {
         LOAD_FILE_MOUNTED,
         LOAD_WEB_,
         LOAD_WEB_MOUNTED,
+        GET_ALL_REFS,
+        GET_REF_CLIENT,
         DROP__,
         LOG_FILE_ON,
         LOG_FILE_OFF,

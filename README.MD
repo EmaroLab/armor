@@ -73,17 +73,34 @@ Or from a launchfile:
 | `FULL_ENTITY_IDENTIFIER` | `Bool` | If **True**, queries returns entities with full IRI. | **False** |
   
 ##Message structure
+
+Use `/armor_interface_srv` for single calls:  
   
 ```
-rosservice call /armor_interface_srv "client_name: ''
-reference_name: ''
-command: ''
-primary_command_spec: ''
-secondary_command_spec: ''
-args: ['']"   
+rosservice call /armor_interface_srv "armor_request:
+  client_name: ''
+  reference_name: ''
+  command: ''
+  primary_command_spec: ''
+  secondary_command_spec: ''
+  args: ['']"  
+```
+
+Use `/armor_interface_serialized_srv` to execute multiple operations:
+
+```
+rosservice call /armor_interface_serialized_srv "armor_requests:
+   - client_name: ''
+     reference_name: ''
+     command: ''
+     primary_command_spec: ''
+     secondary_command_spec: ''
+     args: ['']"
 ```
 
 ###Request
+
+`ArmorDirective.srv` request depends only on `ArmorDirectiveReq.msg`, whose fields are:
 
 | Field                    | arg                                                             |
 | ------------------------ | --------------------------------------------------------------- |
@@ -93,12 +110,16 @@ args: ['']"
 | *primary_command_spec*   | *optional*, primary command specification (e.g. IND, FILE, ...) |
 | *secondary_command_spec* | *optional*, secondary command specification                     |
 | *args*                   | *optional*, list of arguments (e.g. list of individuals to add) |
+
+`ArmorDirective.srv` request depends on a list of `ArmorDirectiveReq.msg`.
   
 The complete list of **commands** and **directives** can be found here: 
 
 [**COMMANDS DOCUMENTATION**](https://github.com/EmaroLab/armor/blob/master/commands.md)
 
 ###Response
+
+`ArmorDirective.srv` request depends only on `ArmorDirectiveRes.msg`, whose fields are:
 
 | Field                    | arg                                                             |
 | ------------------------ | --------------------------------------------------------------- |
@@ -109,6 +130,13 @@ The complete list of **commands** and **directives** can be found here:
 | *timeout*                | *optional*, *bool*, `true` if SPARQL query timed out            |
 | *queried_objects*        | *optional*, *list string*, returns list of queried objects      |
 | *sparql_queried_objects* | *optional*, *list QueryItem* (key-value couples)                |
+
+`ArmorDirective.srv` request depends on a list of `ArmorDirectiveRes.msg` plus the following fields.
+
+| Field                    | arg                                                             |
+| ------------------------ | --------------------------------------------------------------- |
+| *success*                | *bool*, false if at least one command fails                     |
+| *is_consistent*          | *bool*, false if at the end the ontology is inconsistent        |                                                      |
 
 **NOTE:** *sparql_queried_objects* is used only in `QUERY_SPARQL_FORMATTED` calls.
 
