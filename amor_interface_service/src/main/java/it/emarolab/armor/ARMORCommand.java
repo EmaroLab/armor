@@ -597,12 +597,12 @@ class ARMORCommand {
             case DISJOINT_IND_CLASS:
                 ontoRef.makeDisjointIndividuals(ontoRef.getIndividualB2Class(args.get(0)));
                 setResponse(true, 0, "");
-                break;
+                return response;
 
             case DISJOINT_CLASS_CLASS:
                 ontoRef.makeDisjointClasses(ontoRef.getSubClassOf(args.get(0)));
                 setResponse(true, 0, "");
-                break;
+                return response;
 
             /// REMOVE ///////////////////////////////////////////////////
 
