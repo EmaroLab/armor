@@ -30,8 +30,11 @@ error.
 | UNDEFINED                       |   ADD       |   OBJECTPROP   | -              | -            | -             | -              | -              | -          |
 | add obj property to ind         |   ADD       |   OBJECTPROP   |   IND          | prop name    | ind name      | value name     | -              | -          |
 | UNDEFINED                       |   ADD       |   OBJECTPROP   |   OBJECTPROP   | -            | -             | -              | -              | -          |
-| Makes two individuals disjoint  |   ADD       |   DISJOINT     |   IND          | ind1 name    | ind2 name     | -              | -              | -          |
-| Makes two classes disjoint      |   ADD       |   DISJOINT     |   CLASS        | cls1 name    | cls2 name     | -              | -              | -          |
+|                                 |             |                |                |              |               |                |                |            |
+| Makes two individuals disjoint  |  DISJOINT   |   IND          | -              | ind1 name    | ind2 name     | -              | -              | -          |
+| Makes two classes disjoint      |  DISJOINT   |   CLASS        | -              | cls1 name    | cls2 name     | -              | -              | -          |
+| Makes inds of a class disjoint  |  DISJOINT   |   IND          |   CLASS        | cls name     | -             | -              | -              | -          |
+| Makes class' subclasses disjoint|  DISJOINT   |   CLASS        |   CLASS        | cls name     | -             | -              | -              | -          |
 |                                 |             |                |                |              |               |                |                |            |
 | Remove ind from T               |   REMOVE    |   IND          | -              | ind name     | -             | -              | -              | -          |
 | Remove ind from cls             |   REMOVE    |   IND          |   CLASS        | ind name     | cls Name      | -              | -              | -          |

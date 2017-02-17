@@ -437,6 +437,70 @@ class ARMORCommand {
 
             /// ADD //////////////////////////////////////////////////////
 
+            case INVALID_COMMAND:
+                break;
+            case CREATE__:
+                break;
+            case DELETE__:
+                break;
+            case MOUNT__:
+                break;
+            case UNMOUNT__:
+                break;
+            case SAVE__:
+                break;
+            case SAVE_INFERENCE_:
+                break;
+            case LOAD_FILE_:
+                break;
+            case LOAD_FILE_MOUNTED:
+                break;
+            case LOAD_WEB_:
+                break;
+            case LOAD_WEB_MOUNTED:
+                break;
+            case GET_ALL_REFS:
+                break;
+            case GET_REF_CLIENT:
+                break;
+            case DROP__:
+                break;
+            case LOG_FILE_ON:
+                break;
+            case LOG_FILE_OFF:
+                break;
+            case LOG_SCREEN_ON:
+                break;
+            case LOG_SCREEN_OFF:
+                break;
+            case QUERY_IND_:
+                break;
+            case QUERY_IND_CLASS:
+                break;
+            case QUERY_DATAPROP_IND:
+                break;
+            case QUERY_DATAPROP_CLASS:
+                break;
+            case QUERY_OBJECTPROP_IND:
+                break;
+            case QUERY_OBJECTPROP_CLASS:
+                break;
+            case QUERY_CLASS_IND:
+                break;
+            case QUERY_CLASS_CLASS:
+                break;
+            case QUERY_DATAPROP_DATAPROP:
+                break;
+            case QUERY_OBJECTPROP_OBJECTPROP:
+                break;
+            case QUERY_IND_DATAPROP:
+                break;
+            case QUERY_IND_OBJECTPROP:
+                break;
+            case QUERY_SPARQL_:
+                break;
+            case QUERY_SPARQL_FORMATTED:
+                break;
             case APPLY__:
                 ontoRef.applyOWLManipulatorChanges();
                 setResponse(true, 0, "");
@@ -520,15 +584,25 @@ class ARMORCommand {
                 // TODO: ver1
                 return response;
 
-            case ADD_DISJOINT_IND:
+            case DISJOINT_IND_:
                 ontoRef.makeDisjointIndividualName(new HashSet<String>(args));
                 setResponse(true, 0, "");
                 return response;
 
-            case ADD_DISJOINT_CLASS:
+            case DISJOINT_CLASS_:
                 ontoRef.makeDisjointClassName(new HashSet<String>(args));
                 setResponse(true, 0, "");
                 return response;
+
+            case DISJOINT_IND_CLASS:
+                ontoRef.makeDisjointIndividuals(ontoRef.getIndividualB2Class(args.get(0)));
+                setResponse(true, 0, "");
+                break;
+
+            case DISJOINT_CLASS_CLASS:
+                ontoRef.makeDisjointClasses(ontoRef.getSubClassOf(args.get(0)));
+                setResponse(true, 0, "");
+                break;
 
             /// REMOVE ///////////////////////////////////////////////////
 
@@ -835,8 +909,10 @@ class ARMORCommand {
         ADD_OBJECTPROP_IND,
         ADD_DATAPROP_DATAPROP,
         ADD_OBJECTPROP_OBJECTPROP,
-        ADD_DISJOINT_IND,
-        ADD_DISJOINT_CLASS,
+        DISJOINT_IND_,
+        DISJOINT_CLASS_,
+        DISJOINT_IND_CLASS,
+        DISJOINT_CLASS_CLASS,
 
 
         REMOVE_IND_,
