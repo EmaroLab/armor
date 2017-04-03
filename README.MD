@@ -1,5 +1,5 @@
-#ARMOR
-###A ROS Multi-Ontology Reference
+# ARMOR
+### A ROS Multi-Ontology Reference
 
 **ARMOR** is a powerful and versatile management system for single and multi-ontology architectures under ROS. It allows
 to load, query and modify multiple ontologies and requires very little knowledge of OWL APIs and Java. Despite its ease 
@@ -32,7 +32,7 @@ ARMOR expands AMOR capabilities in the following ways:
   
 Legacy support for OWL api 3.4.5 is available on the [OWL-api3 branch](https://github.com/EmaroLab/armor/tree/OWL-api3). Use it in conjunction with [AMOR OWL-api3 branch](https://github.com/EmaroLab/multi_ontology_reference/tree/OWL-api3).
 
-##Installation and dependencies
+## Installation and dependencies
 
 The latest stable release of this project and its direct dependencies (ARMOR, AMOR and the required ROS messages) can be downloaded from this [**repository**](https://github.com/EmaroLab/ros_multi_ontology_references.git).
 
@@ -44,7 +44,7 @@ Else, you can manually download the latest release of each module from the follo
 
 To build both AMOR and ARMOR, you will need [**Rosjava**](http://wiki.ros.org/rosjava) installed.
 
-##Running ARMOR
+## Running ARMOR
 Launching rosjava nodes can be a convoluted operation. To make things easier, after building the package for the first time go to the project directory and run the following command:
 
 `./gradlew deployApp`
@@ -57,7 +57,7 @@ Or from a launchfile:
 
 `<node pkg="armor" type="execute" name="armor_service" args="it.emarolab.armor.ARMORMainService"/>`
   
-##Client
+## Client
   
   Once ARMOR is running, you can call it fom any client node written in your preferred language (C++, Python or Java). As an example, you can have a look at [armor_py](https://github.com/EmaroLab/armor_py_api), a client library written in Python.
   The library currently implements only a small number of functions, but they are stable and more will be added as they are needed.
@@ -66,13 +66,13 @@ Or from a launchfile:
   system, consider to incorporate [AMOR](https://github.com/EmaroLab/multi_ontology_reference) in your code instead
   of using ARMOR.
   
-##Rosparams
+## Rosparams
 
 | Rosparam name            | Type   | Function                                             | Default   |
 |:------------------------:|:------:|:----------------------------------------------------:|:---------:|
 | `FULL_ENTITY_IDENTIFIER` | `Bool` | If **True**, queries returns entities with full IRI. | **False** |
   
-##Message structure
+## Message structure
   
 ```
 rosservice call /armor_interface_srv "client_name: ''
@@ -98,7 +98,7 @@ The complete list of **commands** and **directives** can be found here:
 
 [**COMMANDS DOCUMENTATION**](https://github.com/EmaroLab/armor/blob/master/commands.md)
 
-###Response
+### Response
 
 | Field                    | arg                                                             |
 | ------------------------ | --------------------------------------------------------------- |
@@ -112,7 +112,7 @@ The complete list of **commands** and **directives** can be found here:
 
 **NOTE:** *sparql_queried_objects* is used only in `QUERY_SPARQL_FORMATTED` calls.
 
-###Error codes
+### Error codes
 
 | Field                    | arg                                                             |
 | ------------------------ | --------------------------------------------------------------- |
