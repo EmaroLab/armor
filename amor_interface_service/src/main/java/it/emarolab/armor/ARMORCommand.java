@@ -765,8 +765,8 @@ class ARMORCommand {
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getReasoner() != null) {
-                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            if (ontoRef.getOWLReasoner() != null) {
+                response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
     }
@@ -780,8 +780,8 @@ class ARMORCommand {
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getReasoner() != null) {
-                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            if (ontoRef.getOWLReasoner() != null) {
+                response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
     }
@@ -795,8 +795,8 @@ class ARMORCommand {
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getReasoner() != null) {
-                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            if (ontoRef.getOWLReasoner() != null) {
+                response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
     }
@@ -810,8 +810,8 @@ class ARMORCommand {
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getReasoner() != null) {
-                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            if (ontoRef.getOWLReasoner() != null) {
+                response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
     }
