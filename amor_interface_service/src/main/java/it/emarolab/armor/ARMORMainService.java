@@ -4,11 +4,15 @@ import it.emarolab.amor.owlDebugger.OFGUI.GuiRunner;
 import armor_msgs.*;
 import com.google.common.collect.Lists;
 import org.ros.internal.loader.CommandLineLoader;
+import org.ros.message.MessageFactory;
 import org.ros.namespace.GraphName;
 import org.ros.node.*;
 import org.ros.node.parameter.ParameterTree;
 import org.ros.node.service.ServiceResponseBuilder;
 import org.ros.node.service.ServiceServer;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ARMORMainService extends AbstractNodeMain {
@@ -65,7 +69,7 @@ public class ARMORMainService extends AbstractNodeMain {
 
         ARMORResourceManager.setLogging(connectedNode);
 
-        ServiceServer<ArmorDirectiveRequest, ArmorDirectiveResponse> plan_to_moveit =
+        ServiceServer<ArmorDirectiveRequest, ArmorDirectiveResponse> armorCallback =
                 connectedNode.newServiceServer("armor_interface_srv", ArmorDirective._TYPE,
 
                         new ServiceResponseBuilder<ArmorDirectiveRequest, ArmorDirectiveResponse>() {
@@ -74,17 +78,55 @@ public class ARMORMainService extends AbstractNodeMain {
                             public void
                             build(ArmorDirectiveRequest request, ArmorDirectiveResponse response) {
 
-                                ARMORCommand command = new ARMORCommand(request, response,
+                                ARMORCommand command = new ARMORCommand(
+                                        request.getArmorRequest(), response.getArmorResponse(),
                                         FULL_ENTITY_IDENTIFIER, connectedNode);
                                 if (!command.getServiceResponse().getSuccess()) {
-                                    response = command.executeCommand();
+                                    response.setArmorResponse(command.executeCommand());
                                 }else{
-                                    response = command.getServiceResponse();  // catch invalid command
+                                    response.setArmorResponse(command.getServiceResponse());   // catch invalid command
                                 }
 
                             }
                         });
+
+        ServiceServer<ArmorDirectiveListRequest, ArmorDirectiveListResponse> armorCallbackSerial =
+                connectedNode.newServiceServer("armor_interface_serialized_srv", ArmorDirectiveList._TYPE,
+
+                        new ServiceResponseBuilder<ArmorDirectiveListRequest, ArmorDirectiveListResponse>() {
+
+                            @Override
+                            public void
+                            build(ArmorDirectiveListRequest request, ArmorDirectiveListResponse response) {
+                                Boolean success = true;
+                                Boolean isConsistent = true;
+                                List<ArmorDirectiveRes> results = new ArrayList<ArmorDirectiveRes>();
+
+                                // create dummy response to be filled by ARMORCommand
+                                NodeConfiguration nodeConf = NodeConfiguration.newPrivate();
+                                MessageFactory msgFactory = nodeConf.getTopicMessageFactory();
+                                ArmorDirectiveRes result = msgFactory.newFromType(ArmorDirectiveRes._TYPE);
+
+                                for (int i = 0; i < request.getArmorRequests().size(); i++) {
+                                    ARMORCommand command = new ARMORCommand(
+                                            request.getArmorRequests().get(i),
+                                            result,
+                                            FULL_ENTITY_IDENTIFIER, connectedNode);
+                                    if (!command.getServiceResponse().getSuccess()) {
+                                        results.add(command.executeCommand());
+                                    } else {
+                                        results.add(command.getServiceResponse());  // catch invalid command
+                                    }
+                                    isConsistent = command.getServiceResponse().getIsConsistent();
+                                    if (!command.getServiceResponse().getIsConsistent() && success) success = false;
+                                }
+                                response.setArmorResponses(results);
+                                response.setIsConsistent(isConsistent);
+                                response.setSuccess(success);
+                            }
+                        });
     }
+
 
     // For testing and debugging purposes only:
 

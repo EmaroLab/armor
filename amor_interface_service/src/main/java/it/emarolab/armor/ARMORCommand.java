@@ -48,11 +48,11 @@ class ARMORCommand {
     private String referenceName;
     private String clientName;
     private List<String> args;
-    private ArmorDirectiveResponse response;
+    private ArmorDirectiveRes response;
     private Boolean fullIRIName;
     private ConnectedNode connectedNode;
 
-    ARMORCommand(ArmorDirectiveRequest request, ArmorDirectiveResponse response,
+    ARMORCommand(ArmorDirectiveReq request, ArmorDirectiveRes response,
                         final Boolean fullIRIName, final ConnectedNode connectedNode){
 
         String PrimaryCommandSpec = "";
@@ -91,11 +91,11 @@ class ARMORCommand {
 
     }
 
-    ArmorDirectiveResponse getServiceResponse() {
+    ArmorDirectiveRes getServiceResponse() {
         return response;
     }
 
-    ArmorDirectiveResponse executeCommand(){
+    ArmorDirectiveRes executeCommand(){
 
         OWLReferences ontoRef = (OWLReferences)OWLReferencesContainer.getOWLReferences(referenceName);
         String formattedCommand = fullCommand.toUpperCase().replaceAll(COMMAND_DELIMITER, "_");
@@ -223,6 +223,22 @@ class ARMORCommand {
                     setResponse(false, 203, errorMessage);
                     connectedNode.getLog().error(errorMessage);
                 }
+                return response;
+
+            case GET_ALL_REFS:
+                // Returns the lis of all references currently available
+                Set<String> refs = ARMORResourceManager.getOntologiesNames();
+                List<String> refsList = new ArrayList<>();
+                refsList.addAll(refs);
+                setResponse(true, 0, "", refsList);
+                return response;
+
+            case GET_REF_CLIENT:
+                // return the client id mounted on a reference
+                List<String> clientList = new ArrayList<>();
+                String client = ARMORResourceManager.getOntologyMountedClient(args.get(0));
+                clientList.add(client);
+                setResponse(true, 0, "", clientList);
                 return response;
 
             case DROP__:
@@ -421,6 +437,70 @@ class ARMORCommand {
 
             /// ADD //////////////////////////////////////////////////////
 
+            case INVALID_COMMAND:
+                break;
+            case CREATE__:
+                break;
+            case DELETE__:
+                break;
+            case MOUNT__:
+                break;
+            case UNMOUNT__:
+                break;
+            case SAVE__:
+                break;
+            case SAVE_INFERENCE_:
+                break;
+            case LOAD_FILE_:
+                break;
+            case LOAD_FILE_MOUNTED:
+                break;
+            case LOAD_WEB_:
+                break;
+            case LOAD_WEB_MOUNTED:
+                break;
+            case GET_ALL_REFS:
+                break;
+            case GET_REF_CLIENT:
+                break;
+            case DROP__:
+                break;
+            case LOG_FILE_ON:
+                break;
+            case LOG_FILE_OFF:
+                break;
+            case LOG_SCREEN_ON:
+                break;
+            case LOG_SCREEN_OFF:
+                break;
+            case QUERY_IND_:
+                break;
+            case QUERY_IND_CLASS:
+                break;
+            case QUERY_DATAPROP_IND:
+                break;
+            case QUERY_DATAPROP_CLASS:
+                break;
+            case QUERY_OBJECTPROP_IND:
+                break;
+            case QUERY_OBJECTPROP_CLASS:
+                break;
+            case QUERY_CLASS_IND:
+                break;
+            case QUERY_CLASS_CLASS:
+                break;
+            case QUERY_DATAPROP_DATAPROP:
+                break;
+            case QUERY_OBJECTPROP_OBJECTPROP:
+                break;
+            case QUERY_IND_DATAPROP:
+                break;
+            case QUERY_IND_OBJECTPROP:
+                break;
+            case QUERY_SPARQL_:
+                break;
+            case QUERY_SPARQL_FORMATTED:
+                break;
             case APPLY__:
                 ontoRef.applyOWLManipulatorChanges();
                 setResponse(true, 0, "");
@@ -504,13 +584,23 @@ class ARMORCommand {
                 // TODO: ver1
                 return response;
 
-            case ADD_DISJOINT_IND:
+            case DISJOINT_IND_:
                 ontoRef.makeDisjointIndividualName(new HashSet<String>(args));
                 setResponse(true, 0, "");
                 return response;
 
-            case ADD_DISJOINT_CLASS:
+            case DISJOINT_CLASS_:
                 ontoRef.makeDisjointClassName(new HashSet<String>(args));
+                setResponse(true, 0, "");
+                return response;
+
+            case DISJOINT_IND_CLASS:
+                ontoRef.makeDisjointIndividuals(ontoRef.getIndividualB2Class(args.get(0)));
+                setResponse(true, 0, "");
+                return response;
+
+            case DISJOINT_CLASS_CLASS:
+                ontoRef.makeDisjointClasses(ontoRef.getSubClassOf(args.get(0)));
                 setResponse(true, 0, "");
                 return response;
 
@@ -675,8 +765,8 @@ class ARMORCommand {
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getReasoner() != null) {
-                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            if (ontoRef.getOWLReasoner() != null) {
+                response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
     }
@@ -690,8 +780,8 @@ class ARMORCommand {
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getReasoner() != null) {
-                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            if (ontoRef.getOWLReasoner() != null) {
+                response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
     }
@@ -705,8 +795,8 @@ class ARMORCommand {
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getReasoner() != null) {
-                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            if (ontoRef.getOWLReasoner() != null) {
+                response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
     }
@@ -720,8 +810,8 @@ class ARMORCommand {
 
         if (!referenceName.equals("")) {
             OWLReferences ontoRef = (OWLReferences) OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getReasoner() != null) {
-                response.setIsConsistent(ontoRef.getReasoner().isConsistent());
+            if (ontoRef.getOWLReasoner() != null) {
+                response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
     }
@@ -776,6 +866,8 @@ class ARMORCommand {
         LOAD_FILE_MOUNTED,
         LOAD_WEB_,
         LOAD_WEB_MOUNTED,
+        GET_ALL_REFS,
+        GET_REF_CLIENT,
         DROP__,
         LOG_FILE_ON,
         LOG_FILE_OFF,
@@ -817,8 +909,10 @@ class ARMORCommand {
         ADD_OBJECTPROP_IND,
         ADD_DATAPROP_DATAPROP,
         ADD_OBJECTPROP_OBJECTPROP,
-        ADD_DISJOINT_IND,
-        ADD_DISJOINT_CLASS,
+        DISJOINT_IND_,
+        DISJOINT_CLASS_,
+        DISJOINT_IND_CLASS,
+        DISJOINT_CLASS_CLASS,
 
 
         REMOVE_IND_,
