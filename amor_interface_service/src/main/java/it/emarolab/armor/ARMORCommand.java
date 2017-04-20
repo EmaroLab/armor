@@ -297,6 +297,7 @@ class ARMORCommand {
             case QUERY_DATAPROP_IND:
                 // Queries all data property values belonging to an individual
                 // args[ String propertyName, String indName ]
+
                 Set<OWLLiteral> values = ontoRef.getDataPropertyB2Individual(args.get(1), args.get(0));
                 List<String> valueList = getStringListFromQuery(values, ontoRef);
                 setResponse(true, 0, "", valueList);
@@ -320,9 +321,16 @@ class ARMORCommand {
 
             case QUERY_CLASS_IND:
                 // Queries all classes an individual belongs to
-                // args[ String indName ]
-                Set<OWLClass> classes = ontoRef.getIndividualClasses(args.get(0));
-                List<String> classList = getStringListFromQuery(classes, ontoRef);
+                // Gets only the bottom class if onlyBottom is equal to "true"
+                // args[ String indName, Boolean onlyBottom ]
+                List<String> classList = new ArrayList<>();
+                if (!Boolean.valueOf(args.get(1))) {
+                    Set<OWLClass> classes = ontoRef.getIndividualClasses(args.get(0));
+                    classList = getStringListFromQuery(classes, ontoRef);
+                }else{
+                    classList.add(ontoRef.getOWLObjectName(ontoRef.getOnlyBottomType(args.get(0))));
+                }
+
                 setResponse(true, 0, "", classList);
                 return response;
 
@@ -332,6 +340,14 @@ class ARMORCommand {
                 Set<OWLClass> subClasses = ontoRef.getSubClassOf(args.get(0));
                 List<String> subclassesList = getStringListFromQuery(subClasses, ontoRef);
                 setResponse(true, 0, "", subclassesList);
+                return response;
+
+            case QUERY_CLASS_RESTRICTION:
+                // Return the set of restrictions for a given class
+                // args[ String className]
+                Set<OWLEnquirer.ClassRestriction> restrictions = ontoRef.getClassRestrictions(args.get(0));
+                List<String> restrictionsList = getStringListFromQuery(restrictions, ontoRef);
+                setResponse(true, 0, "", restrictionsList);
                 return response;
 
             case QUERY_DATAPROP_DATAPROP:
@@ -437,70 +453,6 @@ class ARMORCommand {
 
             /// ADD //////////////////////////////////////////////////////
 
-            case INVALID_COMMAND:
-                break;
-            case CREATE__:
-                break;
-            case DELETE__:
-                break;
-            case MOUNT__:
-                break;
-            case UNMOUNT__:
-                break;
-            case SAVE__:
-                break;
-            case SAVE_INFERENCE_:
-                break;
-            case LOAD_FILE_:
-                break;
-            case LOAD_FILE_MOUNTED:
-                break;
-            case LOAD_WEB_:
-                break;
-            case LOAD_WEB_MOUNTED:
-                break;
-            case GET_ALL_REFS:
-                break;
-            case GET_REF_CLIENT:
-                break;
-            case DROP__:
-                break;
-            case LOG_FILE_ON:
-                break;
-            case LOG_FILE_OFF:
-                break;
-            case LOG_SCREEN_ON:
-                break;
-            case LOG_SCREEN_OFF:
-                break;
-            case QUERY_IND_:
-                break;
-            case QUERY_IND_CLASS:
-                break;
-            case QUERY_DATAPROP_IND:
-                break;
-            case QUERY_DATAPROP_CLASS:
-                break;
-            case QUERY_OBJECTPROP_IND:
-                break;
-            case QUERY_OBJECTPROP_CLASS:
-                break;
-            case QUERY_CLASS_IND:
-                break;
-            case QUERY_CLASS_CLASS:
-                break;
-            case QUERY_DATAPROP_DATAPROP:
-                break;
-            case QUERY_OBJECTPROP_OBJECTPROP:
-                break;
-            case QUERY_IND_DATAPROP:
-                break;
-            case QUERY_IND_OBJECTPROP:
-                break;
-            case QUERY_SPARQL_:
-                break;
-            case QUERY_SPARQL_FORMATTED:
-                break;
             case APPLY__:
                 ontoRef.applyOWLManipulatorChanges();
                 setResponse(true, 0, "");
@@ -584,6 +536,13 @@ class ARMORCommand {
                 // TODO: ver1
                 return response;
 
+            case ADD_CARDINALITY_MIN:
+                // Add minimum cardinality to a class defining property
+                // args[ String className, String propertyName, String cardinality,
+                ontoRef.addMinObjectClassExpression(args.get(0), args.get(1), Integer.valueOf(args.get(2)), args.get(3));
+                setResponse(true, 0, "");
+                return response;
+
             case DISJOINT_IND_:
                 ontoRef.makeDisjointIndividualName(new HashSet<String>(args));
                 setResponse(true, 0, "");
@@ -601,6 +560,14 @@ class ARMORCommand {
 
             case DISJOINT_CLASS_CLASS:
                 ontoRef.makeDisjointClasses(ontoRef.getSubClassOf(args.get(0)));
+                setResponse(true, 0, "");
+                return response;
+
+            case MAKE_EQUIVALENT_CLASS:
+                // Convert super classes axioms in a conjunction of expressions
+                // in the class definition.
+                // args[ String clsName ]
+                ontoRef.convertSuperClassesToEquivalentClass(args.get(0));
                 setResponse(true, 0, "");
                 return response;
 
@@ -887,6 +854,7 @@ class ARMORCommand {
         QUERY_OBJECTPROP_CLASS,
         QUERY_CLASS_IND,
         QUERY_CLASS_CLASS,
+        QUERY_CLASS_RESTRICTION,
         QUERY_DATAPROP_DATAPROP,
         QUERY_OBJECTPROP_OBJECTPROP,
         QUERY_IND_DATAPROP,
@@ -909,11 +877,12 @@ class ARMORCommand {
         ADD_OBJECTPROP_IND,
         ADD_DATAPROP_DATAPROP,
         ADD_OBJECTPROP_OBJECTPROP,
+        ADD_CARDINALITY_MIN,
         DISJOINT_IND_,
         DISJOINT_CLASS_,
         DISJOINT_IND_CLASS,
         DISJOINT_CLASS_CLASS,
-
+        MAKE_EQUIVALENT_CLASS,
 
         REMOVE_IND_,
         REMOVE_CLASS_,
