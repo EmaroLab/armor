@@ -72,7 +72,7 @@ Or from a launchfile:
 |:------------------------:|:------:|:----------------------------------------------------:|:---------:|
 | `FULL_ENTITY_IDENTIFIER` | `Bool` | If **True**, queries returns entities with full IRI. | **False** |
   
-##Message structure
+## Message structure
 
 Use `/armor_interface_srv` for single calls:  
   
