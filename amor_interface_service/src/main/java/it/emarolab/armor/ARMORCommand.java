@@ -1,19 +1,14 @@
 package it.emarolab.armor;
 
-import it.emarolab.amor.owlInterface.OWLEnquirer;
-import it.emarolab.amor.owlInterface.OWLReferences;
-import armor_msgs.ArmorDirectiveRequest;
-import armor_msgs.ArmorDirectiveResponse;
+import it.emarolab.amor.owlInterface.*;
 import it.emarolab.amor.owlInterface.OWLReferencesInterface.OWLReferencesContainer;
 import org.apache.jena.query.QueryCancelledException;
 import org.ros.node.ConnectedNode;
-import org.semanticweb.owlapi.model.OWLNamedIndividual;
-import org.semanticweb.owlapi.model.OWLLiteral;
-import org.semanticweb.owlapi.model.OWLDataProperty;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.*;
 import it.emarolab.amor.owlDebugger.Logger;
 import armor_msgs.*;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectMinCardinalityImpl;
+import uk.ac.manchester.cs.owl.owlapi.OWLObjectPropertyImpl;
 
 import java.util.*;
 
@@ -345,7 +340,8 @@ class ARMORCommand {
             case QUERY_CLASS_RESTRICTION:
                 // Return the set of restrictions for a given class
                 // args[ String className]
-                Set<OWLEnquirer.ClassRestriction> restrictions = ontoRef.getClassRestrictions(args.get(0));
+                Set<SemanticRestriction.ApplyingRestriction> restrictions =
+                        ontoRef.getRestrictions(ontoRef.getOWLClass(args.get(0)));
                 List<String> restrictionsList = getStringListFromQuery(restrictions, ontoRef);
                 setResponse(true, 0, "", restrictionsList);
                 return response;
@@ -361,9 +357,9 @@ class ARMORCommand {
             case QUERY_IND_DATAPROP:
                 // Queries all data properties belonging to an individual
                 // args[ String indName ]
-                Set<OWLEnquirer.DataPropertyRelations> dataProps = ontoRef.getDataPropertyB2Individual(args.get(0));
+                Set<DataPropertyRelations> dataProps = ontoRef.getDataPropertyB2Individual(args.get(0));
                 Set<OWLDataProperty> dataObjects = new HashSet<>();
-                for (OWLEnquirer.DataPropertyRelations prop : dataProps){
+                for (DataPropertyRelations prop : dataProps){
                     dataObjects.add(prop.getProperty());}
                 List<String> allDataList = getStringListFromQuery(dataObjects, ontoRef);
                 setResponse(true, 0, "", allDataList);
@@ -372,10 +368,10 @@ class ARMORCommand {
             case QUERY_IND_OBJECTPROP:
                 // Queries all object properties belonging to an individual
                 // args[ String indName ]
-                Set<OWLEnquirer.ObjectPropertyRelations> objectProps
+                Set<ObjectPropertyRelations> objectProps
                         = ontoRef.getObjectPropertyB2Individual(args.get(0));
                 Set<OWLObjectProperty> propObjects = new HashSet<>();
-                for (OWLEnquirer.ObjectPropertyRelations prop : objectProps){
+                for (ObjectPropertyRelations prop : objectProps){
                     propObjects.add(prop.getProperty());}
                 List<String> allObjectlist = getStringListFromQuery(propObjects, ontoRef);
                 setResponse(true, 0, "", allObjectlist);
@@ -538,18 +534,22 @@ class ARMORCommand {
 
             case ADD_CARDINALITY_MIN:
                 // Add minimum cardinality to a class defining property
-                // args[ String className, String propertyName, String cardinality,
-                ontoRef.addMinObjectClassExpression(args.get(0), args.get(1), Integer.valueOf(args.get(2)), args.get(3));
+                // args[ String className, String propertyName, String cardinality, String valueType
+                SemanticRestriction.ApplyingCardinalityRestriction rest;
+                rest = new SemanticRestriction.ClassRestrictedOnMinObject(
+                        ontoRef.getOWLClass(args.get(0)), ontoRef.getOWLClass(args.get(3)),
+                                ontoRef.getOWLObjectProperty(args.get(1)), Integer.valueOf(args.get(2)));
+                ontoRef.addRestriction(rest);
                 setResponse(true, 0, "");
                 return response;
 
             case DISJOINT_IND_:
-                ontoRef.makeDisjointIndividualName(new HashSet<String>(args));
+                ontoRef.makeDisjointIndividualNames(new HashSet<String>(args));
                 setResponse(true, 0, "");
                 return response;
 
             case DISJOINT_CLASS_:
-                ontoRef.makeDisjointClassName(new HashSet<String>(args));
+                ontoRef.makeDisjointClassNames(new HashSet<String>(args));
                 setResponse(true, 0, "");
                 return response;
 
