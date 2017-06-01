@@ -11,6 +11,8 @@ and debugging reasons, it is strongly advised to always specify it.
 (e.g. if you add an individual to a non-existing class, the class will be
 created automatically).
 
+**If you need a command that does not yet exists, please contact us or open an issue.**
+
 ## Manipulations
 Commands that somehow change the state of an ontology reference are called
 manipulation commands. If an identified client is mounted on a reference,

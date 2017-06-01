@@ -35,8 +35,8 @@ repositories {
 dependencies {
     /* An external maven artifact dependency */
     compile 'org.ros.rosjava_core:rosjava:[0.2,0.3)'
-    compile 'org.ros.rosjava_messages:armor_msgs:0.1.0'
-    compile 'it.emarolab.amor:amor:0.1.0'
+    compile 'org.ros.rosjava_messages:armor_msgs:1.0.0'
+    compile 'it.emarolab.amor:amor:1.0.0'
 
     compile group: 'com.github.galigator.openllet', name: 'openllet-owlapi', version: '2.5.1'
     compile group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.0.2'
