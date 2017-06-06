@@ -13,6 +13,11 @@ created automatically).
 
 **If you need a command that does not yet exists, please contact us or open an issue.**
 
+Also, it is easy to create your own commands:
++ Add a method to perform the desired operation in the static class ```ARMORCommand```
++ Add the method and a unique id to the map in ```ARMORCommandExecutive``` 
+(e.g., ```"SOME_RANDOM_COMMAND"```)
+
 ## Manipulations
 Commands that somehow change the state of an ontology reference are called
 manipulation commands. If an identified client is mounted on a reference,

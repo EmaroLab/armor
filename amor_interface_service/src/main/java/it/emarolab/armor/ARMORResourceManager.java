@@ -22,7 +22,7 @@ import org.ros.node.ConnectedNode;
  * ARMORResourceManager class is used to load owl files and implement
  * a mount/unmount system. This can be used by users to ensure that multiple
  * nodes are not manipulating the same reference at the same time.
- * It is used by {@link ARMORCommand} whenever an ontology is loaded or dropped.
+ * It is used by {@link ARMORCommandExecutive} whenever an ontology is loaded or dropped.
  * </p>
  *
  * @see

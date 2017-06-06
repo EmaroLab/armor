@@ -17,18 +17,8 @@ import java.util.List;
 
 public class ARMORMainService extends AbstractNodeMain {
 
-    private final static String DEFAULT_LOG_SAVING_PATH = ""; // TODO
     private final static Boolean DEFAULT_FULL_ENTITY_IDENTIFIER = false;
     private final static Boolean DEFAULT_SHOW_GUI = false;
-    private final static Boolean DEFAULT_LOG_REFERENCES_CONTAINER = false;
-    private final static Boolean DEFAULT_LOG_REFERENCES_INTERFACE = false;
-    private final static Boolean DEFAULT_LOG_OWL_LIBRARY = false;
-    private final static Boolean DEFAULT_LOG_REASONER_MONITOR = false;
-    private final static Boolean DEFAULT_LOG_REASONER_EXPLANATION = false;
-    private final static Boolean DEFAULT_LOG_OWL_MANIPULATOR = false;
-    private final static Boolean DEFAULT_LOG_ONTOLOGY_REFERENCE = false;
-    private final static Boolean DEFAULT_LOG_OWL_ENQUIRER = false;
-    private final static Boolean DEFAULT_LOG_ONTOLOGY_EXPORTER = false;
 
     @Override
     public GraphName getDefaultNodeName() {
@@ -40,26 +30,9 @@ public class ARMORMainService extends AbstractNodeMain {
 
         ParameterTree params = connectedNode.getParameterTree();
 
-        final String LOG_SAVING_PATH = params.getString("/armor/settings/log_path", DEFAULT_LOG_SAVING_PATH);
         final Boolean SHOW_GUI = params.getBoolean("/armor/settings/show_gui", DEFAULT_SHOW_GUI);
-        final Boolean LOG_OWL_LIBRARY = params.getBoolean("/armor/settings/log_owl_lib", DEFAULT_LOG_OWL_LIBRARY);
-        final Boolean LOG_OWL_ENQUIRER = params.getBoolean("/armor/settings/log_owl_enquirer", DEFAULT_LOG_OWL_ENQUIRER);
-        final Boolean LOG_OWL_MANIPULATOR = params.getBoolean("/armor/settings/log_owl_manipulator", DEFAULT_LOG_OWL_MANIPULATOR);
-        // TODO: for inputs
         final Boolean FULL_ENTITY_IDENTIFIER =
                 params.getBoolean("/armor/settings/full_entity_iri", DEFAULT_FULL_ENTITY_IDENTIFIER);
-        final Boolean LOG_REFERENCES_CONTAINER =
-                params.getBoolean("/armor/settings/log_reference_container", DEFAULT_LOG_REFERENCES_CONTAINER);
-        final Boolean LOG_REFERENCES_INTERFACE =
-                params.getBoolean("/armor/settings/log_reference_interface", DEFAULT_LOG_REFERENCES_INTERFACE);
-        final Boolean LOG_REASONER_MONITOR =
-                params.getBoolean("/armor/settings/log_reasoner_monitor", DEFAULT_LOG_REASONER_MONITOR);
-        final Boolean LOG_REASONER_EXPLANATION =
-                params.getBoolean("/armor/settings/log_reasoner_explanation", DEFAULT_LOG_REASONER_EXPLANATION);
-        final Boolean LOG_ONTOLOGY_REFERENCE =
-                params.getBoolean("/armor/settings/log_ontology_reference", DEFAULT_LOG_ONTOLOGY_REFERENCE);
-        final Boolean LOG_ONTOLOGY_EXPORTER =
-                params.getBoolean("/armor/settings/log_ontology_exporter", DEFAULT_LOG_ONTOLOGY_EXPORTER);
 
         if (SHOW_GUI){
             connectedNode.getLog().info("Staring GUI.");
@@ -69,75 +42,65 @@ public class ARMORMainService extends AbstractNodeMain {
 
         ARMORResourceManager.setLogging(connectedNode);
 
+        // Callback for ArmorDirective.srv calls (single operation)
+
         ServiceServer<ArmorDirectiveRequest, ArmorDirectiveResponse> armorCallback =
                 connectedNode.newServiceServer("armor_interface_srv", ArmorDirective._TYPE,
-
-                        new ServiceResponseBuilder<ArmorDirectiveRequest, ArmorDirectiveResponse>() {
-
-                            @Override
-                            public void
-                            build(ArmorDirectiveRequest request, ArmorDirectiveResponse response) {
-
-                                ARMORCommand command = new ARMORCommand(
-                                        request.getArmorRequest(), response.getArmorResponse(),
-                                        FULL_ENTITY_IDENTIFIER, connectedNode);
-                                if (!command.getServiceResponse().getSuccess()) {
-                                    response.setArmorResponse(command.executeCommand());
-                                }else{
-                                    response.setArmorResponse(command.getServiceResponse());   // catch invalid command
-                                }
-
+                        (request, response) -> {
+                            ARMORCommandExecutive command = new ARMORCommandExecutive(
+                                    request.getArmorRequest(), response.getArmorResponse(),
+                                    FULL_ENTITY_IDENTIFIER, connectedNode);
+                            if (!command.getServiceResponse().getSuccess()) {
+                                response.setArmorResponse(command.executeCommand());
+                            }else{
+                                response.setArmorResponse(command.getServiceResponse());   // catch invalid command
                             }
                         });
+
+        // Callback for ArmorDirectiveList.srv (multiple operations)
 
         ServiceServer<ArmorDirectiveListRequest, ArmorDirectiveListResponse> armorCallbackSerial =
                 connectedNode.newServiceServer("armor_interface_serialized_srv", ArmorDirectiveList._TYPE,
+                        (request, response) -> {
+                            Boolean success = true;
+                            Boolean isConsistent = true;
+                            List<ArmorDirectiveRes> results = new ArrayList<ArmorDirectiveRes>();
 
-                        new ServiceResponseBuilder<ArmorDirectiveListRequest, ArmorDirectiveListResponse>() {
+                            // create empty response to be filled by ARMORCommandExecutive
+                            NodeConfiguration nodeConf = NodeConfiguration.newPrivate();
+                            MessageFactory msgFactory = nodeConf.getTopicMessageFactory();
+                            ArmorDirectiveRes result = msgFactory.newFromType(ArmorDirectiveRes._TYPE);
 
-                            @Override
-                            public void
-                            build(ArmorDirectiveListRequest request, ArmorDirectiveListResponse response) {
-                                Boolean success = true;
-                                Boolean isConsistent = true;
-                                List<ArmorDirectiveRes> results = new ArrayList<ArmorDirectiveRes>();
-
-                                // create dummy response to be filled by ARMORCommand
-                                NodeConfiguration nodeConf = NodeConfiguration.newPrivate();
-                                MessageFactory msgFactory = nodeConf.getTopicMessageFactory();
-                                ArmorDirectiveRes result = msgFactory.newFromType(ArmorDirectiveRes._TYPE);
-
-                                for (int i = 0; i < request.getArmorRequests().size(); i++) {
-                                    ARMORCommand command = new ARMORCommand(
-                                            request.getArmorRequests().get(i),
-                                            result,
-                                            FULL_ENTITY_IDENTIFIER, connectedNode);
-                                    if (!command.getServiceResponse().getSuccess()) {
-                                        results.add(command.executeCommand());
-                                    } else {
-                                        results.add(command.getServiceResponse());  // catch invalid command
-                                    }
-                                    isConsistent = command.getServiceResponse().getIsConsistent();
-                                    if (!command.getServiceResponse().getIsConsistent() && success) success = false;
+                            for (int i = 0; i < request.getArmorRequests().size(); i++) {
+                                ARMORCommandExecutive command = new ARMORCommandExecutive(
+                                        request.getArmorRequests().get(i),
+                                        result,
+                                        FULL_ENTITY_IDENTIFIER, connectedNode);
+                                if (!command.getServiceResponse().getSuccess()) {
+                                    results.add(command.executeCommand());
+                                } else {
+                                    results.add(command.getServiceResponse());  // catch invalid command
                                 }
-                                response.setArmorResponses(results);
-                                response.setIsConsistent(isConsistent);
-                                response.setSuccess(success);
+                                isConsistent = command.getServiceResponse().getIsConsistent();
+                                if (!command.getServiceResponse().getIsConsistent() && success) success = false;
                             }
+                            response.setArmorResponses(results);
+                            response.setIsConsistent(isConsistent);
+                            response.setSuccess(success);
                         });
     }
 
-
-    // For testing and debugging purposes only:
-
-    public static void main(String argv[]) throws java.io.IOException {
-
-        String[] args = { "it.emarolab.armor.ARMORMainService" };
-        CommandLineLoader loader = new CommandLineLoader(Lists.newArrayList(args));
-        NodeConfiguration nodeConfiguration = loader.build();
-        ARMORMainService service = new ARMORMainService();
-
-        NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
-        nodeMainExecutor.execute(service, nodeConfiguration);
-    }
+//     For testing and debugging purposes only
+//     You can use this main as entry point in an IDE (e.g., IDEA) to run a debugger
+//
+//    public static void main(String argv[]) throws java.io.IOException {
+//
+//        String[] args = { "it.emarolab.armor.ARMORMainService" };
+//        CommandLineLoader loader = new CommandLineLoader(Lists.newArrayList(args));
+//        NodeConfiguration nodeConfiguration = loader.build();
+//        ARMORMainService service = new ARMORMainService();
+//
+//        NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
+//        nodeMainExecutor.execute(service, nodeConfiguration);
+//    }
 }
