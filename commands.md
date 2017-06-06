@@ -4,6 +4,8 @@ We assume that both *client_id* and *reference_name* fields are always specified
 The former can be omitted for non-manipulations commands but for safety 
 and debugging reasons, it is strongly advised to always specify it.
 
+Some quick remarks:
+
 + *Commands* and *directives* are **case-insensitive**. *Argument list* is **case sensitive**.
 + **UNDEFINED** commands are functions planned for the future but not yet implemented.
 + **Type** args can be any ontology supported type such as *'String'*, *'Integer'*, and more.
@@ -14,7 +16,7 @@ created automatically).
 **If you need a command that does not yet exists, please contact us or open an issue.**
 
 Also, it is easy to create your own commands:
-+ Add a method to perform the desired operation in the static class ```ARMORCommand```
++ Add a method to perform the desired operation in one of the static classes ```ARMORCommandManipulation```, ```ARMORCommandQuery``` or ```ArmorCommandsUtility```.
 + Add the method and a unique id to the map in ```ARMORCommandExecutive``` 
 (e.g., ```"SOME_RANDOM_COMMAND"```)
 
