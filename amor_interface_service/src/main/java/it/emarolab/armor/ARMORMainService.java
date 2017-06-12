@@ -92,15 +92,15 @@ public class ARMORMainService extends AbstractNodeMain {
 
 //     For testing and debugging purposes only
 //     You can use this main as entry point in an IDE (e.g., IDEA) to run a debugger
-//
-//    public static void main(String argv[]) throws java.io.IOException {
-//
-//        String[] args = { "it.emarolab.armor.ARMORMainService" };
-//        CommandLineLoader loader = new CommandLineLoader(Lists.newArrayList(args));
-//        NodeConfiguration nodeConfiguration = loader.build();
-//        ARMORMainService service = new ARMORMainService();
-//
-//        NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
-//        nodeMainExecutor.execute(service, nodeConfiguration);
-//    }
+
+    public static void main(String argv[]) throws java.io.IOException {
+
+        String[] args = { "it.emarolab.armor.ARMORMainService" };
+        CommandLineLoader loader = new CommandLineLoader(Lists.newArrayList(args));
+        NodeConfiguration nodeConfiguration = loader.build();
+        ARMORMainService service = new ARMORMainService();
+
+        NodeMainExecutor nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
+        nodeMainExecutor.execute(service, nodeConfiguration);
+    }
 }

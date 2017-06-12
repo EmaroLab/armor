@@ -43,7 +43,6 @@ class ARMORResourceManager {
     static OWLReferences loadOntologyFromFile(String referenceName, List<String> args){
         OWLReferences ontoRef;
         if (getOntologiesNames().contains(referenceName)){
-            // TODO: logging
             ontoRef = (OWLReferences)OWLReferencesContainer.getOWLReferences(referenceName);
             logWarn("The ontology you are trying to add is already in the database.");
         }else{
@@ -87,7 +86,6 @@ class ARMORResourceManager {
     static OWLReferences loadOntologyFromWeb(String referenceName, List<String> args){
         OWLReferences ontoRef;
         if (getOntologiesNames().contains(referenceName)){
-            // TODO: logging
             ontoRef = (OWLReferences)OWLReferencesContainer.getOWLReferences(referenceName);
             logWarn("The ontology you are trying to add is already in the database.");
         }else{
@@ -137,9 +135,9 @@ class ARMORResourceManager {
     }
 
     static Boolean tryMountClient(String clientName, String referenceName) {
-        // Tries to mount a client on an ontology.
-        // It fails if the ontology already exists or another client is already mounted on it.
-        // It succeeds but warns the user, if the client is already mount on the ontology.
+        // Tries to mount a client on an ontology. It fails if client is already
+        // mounted on it or the reference does not exist.
+        // It succeeds but warns the user, if the client is already mounted on the ontology.
         if (getOntologiesNames().contains(referenceName)) {
             Set<String> activeOntologies = getInactiveOntologiesNames();
             if (activeOntologies.contains(referenceName)) {
@@ -147,20 +145,17 @@ class ARMORResourceManager {
                 return true;
             } else {
                 if (mountedOntologiesTable.get(referenceName).equals(clientName)) {
-                    // TODO: logging
                     logWarn(clientName + " is already mounted on " + referenceName + ".");
                     return true;
                 } else {
-                    // TODO: logging
                     String currentClient = mountedOntologiesTable.get(referenceName);
-                    logWarn(currentClient + "is currently mounted on " + referenceName + ". Please unmount "
+                    logError(currentClient + "is currently mounted on " + referenceName + ". Please unmount "
                             + currentClient + "before trying to mount another client.");
                     return false;
                 }
             }
         } else {
-            // TODO: logging
-            logInfo("No OWLReference initialized with this name:" + referenceName);
+            logError("No OWLReference initialized with this name:" + referenceName);
             return false;
         }
     }
@@ -174,7 +169,6 @@ class ARMORResourceManager {
             }
             interruptedConnections += 1;
         }
-        // TODO: logging
         logInfo(clientName + " disconnected from " + interruptedConnections.toString() + " ontologies.");
     }
 
@@ -182,7 +176,6 @@ class ARMORResourceManager {
         if (mountedOntologiesTable.get(referenceName).equals(clientName)){
             mountedOntologiesTable.put(referenceName,"none");
         }else{
-            // TODO: logging
             logWarn("No client " + clientName + " mounted on " + referenceName + ".");
         }
     }

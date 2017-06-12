@@ -34,7 +34,7 @@ class ARMORCommandUtility {
 
     static ArmorDirectiveRes invalidCommand(ArmorDirectiveReq request, ArmorDirectiveRes response) {
         // Catches invalid commands.
-        setResponse(request.getReferenceName(), false, 205, "Invalid valid command.", response);
+        setResponse(request.getReferenceName(), false, 205, "Invalid command.", response);
         return response;
     }
 
@@ -44,7 +44,7 @@ class ARMORCommandUtility {
         String clientName = request.getClientName();
         String referenceName = request.getReferenceName();
         if (ARMORResourceManager.tryMountClient(clientName, referenceName)) {
-            setResponse(referenceName, false, 205, "Invalid valid command.", response);
+            setResponse(referenceName, true, 0, "", response);
         } else {
             String errorMessage = clientName + " cannot be mounted on " + referenceName
                     + ". Another client is already mounted on it.";
