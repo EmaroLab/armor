@@ -5,7 +5,7 @@ import armor_msgs.ArmorDirectiveRes;
 import it.emarolab.amor.owlInterface.*;
 import org.ros.node.ConnectedNode;
 import java.util.*;
-import static it.emarolab.armor.ARMORCommandsManipulationUtils.setResponse;
+import static it.emarolab.armor.ARMORCommandsUtils.setResponse;
 
 /**
  * Project: a ROS Multi Ontology Reference - aRMOR <br>

@@ -8,7 +8,7 @@ import org.apache.jena.query.QueryCancelledException;
 import org.ros.node.ConnectedNode;
 import org.semanticweb.owlapi.model.*;
 import java.util.*;
-import static it.emarolab.armor.ARMORCommandsManipulationUtils.*;
+import static it.emarolab.armor.ARMORCommandsUtils.*;
 
 /**
  * Project: a ROS Multi Ontology Reference - aRMOR <br>

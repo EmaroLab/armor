@@ -3,7 +3,7 @@ package it.emarolab.armor;
 import org.ros.node.ConnectedNode;
 import armor_msgs.*;
 import java.util.*;
-import static it.emarolab.armor.ARMORCommandsManipulationUtils.setResponse;
+import static it.emarolab.armor.ARMORCommandsUtils.setResponse;
 
 /**
  * Project: a ROS Multi Ontology Reference - aRMOR <br>
@@ -36,6 +36,7 @@ class ARMORCommandExecutive {
 
     private final static String COMMAND_DELIMITER = "_"; //regex reserved chars like + must be escaped (\\+)
     private String fullCommand;
+    private String referenceName;
     private ArmorDirectiveRes response;
     private Boolean fullIRIName;
     private ConnectedNode connectedNode;
@@ -47,23 +48,30 @@ class ARMORCommandExecutive {
 
         // Parse command and directives
 
+        this.response = response;
+        this.fullIRIName = fullIRIName;
+        this.connectedNode = connectedNode;
+        this.response.setSuccess(true);       //true until call fails
+
         String PrimaryCommandSpec = "";
         String SecondaryCommandSpec = "";
 
-        if (request.getReferenceName() == null){
-            //TODO: log error, set error response then return
-            setResponse(request.getReferenceName(), false, 201,
+        if (request.getReferenceName().equals("")){
+            setResponse("", false, 201,
                     "Invalid request. No reference name specified.", response);
-            System.out.println("Invalid request. No reference name specified.");
-            throw new AssertionError();
+            connectedNode.getLog().error("Invalid request. No reference name specified.");
+            this.response.setSuccess(false);
+            return;
         }
 
-        if (request.getCommand() == null){
-            //TODO: log error, set error response then return
-            setResponse(request.getReferenceName(),false, 202,
+        this.referenceName = request.getReferenceName();
+
+        if (request.getCommand().equals("")){
+            setResponse(this.referenceName,false, 202,
                     "Invalid request. No command specified.", response);
-            System.out.println("Invalid request. No command specified.");
-            throw new AssertionError();
+            connectedNode.getLog().error("Invalid request. No command specified.");
+            this.response.setSuccess(false);
+            return;
         }
 
         if (request.getPrimaryCommandSpec() != null){
@@ -76,18 +84,20 @@ class ARMORCommandExecutive {
 
         this.fullCommand = request.getCommand() + COMMAND_DELIMITER +
                 PrimaryCommandSpec + COMMAND_DELIMITER + SecondaryCommandSpec;
-        this.response = response;
-        this.fullIRIName = fullIRIName;
-        this.connectedNode = connectedNode;
 
         initializeCommands(request, response);
-
     }
 
     ArmorDirectiveRes executeCommand(){
         String formattedCommand = fullCommand.toUpperCase().replaceAll(COMMAND_DELIMITER, "_");
-        commands.get(formattedCommand).run();
-        return  response;
+        try {
+            commands.get(formattedCommand).run();
+        }catch (NullPointerException e){
+            setResponse(this.referenceName, false, 205,
+                    "Malformed command. No Command/Specs combination match found. " +
+                            "Please check your service requests and retry.", this.response);
+        }
+        return response;
     }
 
     ArmorDirectiveRes getServiceResponse() {

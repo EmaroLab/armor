@@ -26,7 +26,7 @@ import java.util.Set;
  */
 
 
-public class ARMORCommandsManipulationUtils {
+public class ARMORCommandsUtils {
     ////////////////////  OTHER CLASS METHODS  ////////////////////
 
     static void setResponse(String referenceName, Boolean success, int exitCode, String errorMessage,
@@ -40,7 +40,7 @@ public class ARMORCommandsManipulationUtils {
         if (!referenceName.equals("")) {
             OWLReferences ontoRef =
                     (OWLReferences) OWLReferencesInterface.OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getOWLReasoner() != null) {
+            if (ontoRef != null && ontoRef.getOWLReasoner() != null) {
                 response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
@@ -57,7 +57,7 @@ public class ARMORCommandsManipulationUtils {
         if (!referenceName.equals("")) {
             OWLReferences ontoRef =
                     (OWLReferences) OWLReferencesInterface.OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getOWLReasoner() != null) {
+            if (ontoRef != null && ontoRef.getOWLReasoner() != null) {
                 response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
@@ -74,7 +74,7 @@ public class ARMORCommandsManipulationUtils {
         if (!referenceName.equals("")) {
             OWLReferences ontoRef =
                     (OWLReferences) OWLReferencesInterface.OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getOWLReasoner() != null) {
+            if (ontoRef != null && ontoRef.getOWLReasoner() != null) {
                 response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }
@@ -91,7 +91,7 @@ public class ARMORCommandsManipulationUtils {
         if (!referenceName.equals("")) {
             OWLReferences ontoRef =
                     (OWLReferences) OWLReferencesInterface.OWLReferencesContainer.getOWLReferences(referenceName);
-            if (ontoRef.getOWLReasoner() != null) {
+            if (ontoRef != null && ontoRef.getOWLReasoner() != null) {
                 response.setIsConsistent(ontoRef.getOWLReasoner().isConsistent());
             }
         }

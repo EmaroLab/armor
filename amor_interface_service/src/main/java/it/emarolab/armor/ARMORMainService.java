@@ -50,7 +50,7 @@ public class ARMORMainService extends AbstractNodeMain {
                             ARMORCommandExecutive command = new ARMORCommandExecutive(
                                     request.getArmorRequest(), response.getArmorResponse(),
                                     FULL_ENTITY_IDENTIFIER, connectedNode);
-                            if (!command.getServiceResponse().getSuccess()) {
+                            if (command.getServiceResponse().getSuccess()) {
                                 response.setArmorResponse(command.executeCommand());
                             }else{
                                 response.setArmorResponse(command.getServiceResponse());   // catch invalid command
