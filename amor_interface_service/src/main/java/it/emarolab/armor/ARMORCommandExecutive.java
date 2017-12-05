@@ -133,7 +133,7 @@ class ARMORCommandExecutive {
         commands.put("QUERY_OBJECTPROP_IND",     (() -> ARMORCommandsQuery.queryObjectpropValuesB2Ind           (request, response, fullIRIName)));
         commands.put("QUERY_CLASS_IND",          (() -> ARMORCommandsQuery.queryIndDefiningClasses              (request, response, fullIRIName)));
         commands.put("QUERY_CLASS_CLASS",        (() -> ARMORCommandsQuery.querySubclasses                      (request, response, fullIRIName)));
-        commands.put("QUERY_CLASS_RESTRICTION",  (() -> ARMORCommandsQuery.queryClassRestrictions               (request, response, fullIRIName)));
+        commands.put("QUERY_CLASS_RESTRICTIONS", (() -> ARMORCommandsQuery.queryClassRestrictions               (request, response, fullIRIName)));
         commands.put("QUERY_IND_DATAPROP",       (() -> ARMORCommandsQuery.queryDatapropsB2Ind                  (request, response, fullIRIName)));
         commands.put("QUERY_IND_OBJECTPROP",     (() -> ARMORCommandsQuery.queryObjectpropsB2Ind                (request, response, fullIRIName)));
         commands.put("QUERY_SPARQL_",            (() -> ARMORCommandsQuery.querySPARQL                          (request, response, fullIRIName, connectedNode)));
