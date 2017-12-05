@@ -94,7 +94,7 @@ enforce this practice.
 | All values of a data property belonging to an individual | QUERY   | DATAPROP   | IND         | prop name                       | ind name                   |
 | All values of a data property belonging to an individual | QUERY   | OBJECTPROP | IND         | prop name                       | ind name                   |
 | All classes belonging to a super-class                   | QUERY   | CLASS      | CLASS       | super-cls name                  | -                          |
-| All class restrictions <sup>[2](#2)</sup>                | QUERY   | CLASS      | RESTRICTIONS| cls name                        | -                          |
+| All class restrictions <sup>[2](#2)</sup>                | QUERY   | CLASS      | RESTRICTION | cls name                        | -                          |
 | UNDEFINED                                                | QUERY   | DATAPROP   | DATAPROP    | -                               | -                          |
 | UNDEFINED                                                | QUERY   | OBJECTPROP | OBJECTPROP  | -                               | -                          |
 | All data property belonging to an individual             | QUERY   | IND        | DATAPROP    | ind name                        | -                          |
