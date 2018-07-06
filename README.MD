@@ -71,6 +71,7 @@ Or from a launchfile:
 | Rosparam name            | Type   | Function                                             | Default   |
 |:------------------------:|:------:|:----------------------------------------------------:|:---------:|
 | `FULL_ENTITY_IDENTIFIER` | `Bool` | If **True**, queries returns entities with full IRI. | **False** |
+|        `SHOW_GUI`        | `Bool` | If **True**, it shows AMOR's debug GUI.              | **False** |
   
 ## Message structure
 
