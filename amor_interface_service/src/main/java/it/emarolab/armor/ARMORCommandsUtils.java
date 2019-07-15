@@ -98,16 +98,16 @@ public class ARMORCommandsUtils {
     }
 
     static List<String> getStringListFromQuery(Set<?> queriedResults, OWLReferences ontoRef, Boolean fullIRIName){
-        if (!fullIRIName){
-            return new ArrayList<>(ontoRef.getOWLObjectName(queriedResults));
-        }else{
+        //if (!fullIRIName){ // not supported yet
+        //    return new ArrayList<>(ontoRef.getOWLObjectName(queriedResults));
+        //}else{
             List<String> resultList = new ArrayList<String>();
             Iterator<?> queriedResultIt = queriedResults.iterator();
             while (queriedResultIt.hasNext()){
                 resultList.add(queriedResultIt.next().toString());
             }
             return resultList;
-        }
+        //}
     }
 
 
