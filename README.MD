@@ -34,7 +34,7 @@ Legacy support for OWL api 3.4.5 is available on the [OWL-api3 branch](https://g
 
 ## Installation and dependencies
 
-The latest stable release of this project and its direct dependencies (ARMOR, AMOR and the required ROS messages) can be downloaded from this [**repository**](https://github.com/EmaroLab/ros_multi_ontology_references.git).
+The latest stable release of this project and its dependencies (ARMOR, AMOR, the required ROS messages and a Python client) can be installed directly from this [**REPOSITORY**](https://github.com/EmaroLab/ros_multi_ontology_references.git).
 
 Else, you can manually download the latest release of each module from the following repositories:
 
