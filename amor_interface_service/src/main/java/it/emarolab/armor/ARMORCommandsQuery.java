@@ -120,8 +120,8 @@ public class ARMORCommandsQuery {
         // <pre><code>args[ String className]
         OWLReferences ontoRef = (OWLReferences)
                 OWLReferencesInterface.OWLReferencesContainer.getOWLReferences(request.getReferenceName());
-        Set<SemanticRestriction.ApplyingRestriction> restrictions =
-                ontoRef.getRestrictions(ontoRef.getOWLClass(request.getArgs().get(0)));
+        Set<Set<SemanticRestriction.ApplyingRestriction>> restrictions =
+                ontoRef.getClassRestrictions(ontoRef.getOWLClass(request.getArgs().get(0)));
         List<String> restrictionsList = getStringListFromQuery(restrictions, ontoRef, fullIRIName);
         setResponse(request.getReferenceName(), true, 0, "", restrictionsList, response);
         return response;
