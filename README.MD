@@ -34,7 +34,8 @@ Legacy support for OWL api 3.4.5 is available on the [OWL-api3 branch](https://g
 
 ## Installation and dependencies
 
-The latest stable release of this project and its dependencies (ARMOR, AMOR, the required ROS messages and a Python client) can be installed directly from this [**REPOSITORY**](https://github.com/EmaroLab/ros_multi_ontology_references.git).
+The latest stable release of this project and its dependencies (ARMOR, AMOR, the required ROS messages and a Python client) can be installed directly from [here](https://github.com/EmaroLab/ros_multi_ontology_references.git).
+Check also the [RDS tutorial](https://github.com/EmaroLab/armor_rds_tutorial) we made to showcase ARMOR.
 
 Else, you can manually download the latest release of each module from the following repositories:
 
@@ -43,6 +44,8 @@ Else, you can manually download the latest release of each module from the follo
 + [**armor_msgs**](https://github.com/EmaroLab/armor_msgs)
 
 To build both AMOR and ARMOR, you will need [**Rosjava**](http://wiki.ros.org/rosjava) installed.
+
+We experienced some installation issues with the newest ROS version. To succesfully install ARMOR in this case, follow the steps available [here](https://github.com/EmaroLab/armor/issues/7).
 
 ## Running ARMOR
 Launching rosjava nodes can be a convoluted operation. To make things easier, after building the package for the first time go to the project directory and run the following command:
